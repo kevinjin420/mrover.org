@@ -1,7 +1,7 @@
 ---
 // This page is the same as /donate - redirects users to the donate page
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import AllSponsors from '../../components/AllSponsors.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import AllSponsors from '@/components/AllSponsors.astro';
 ---
 
 <BaseLayout title="Sponsor - University of Michigan Mars Rover Team">
@@ -11,8 +11,8 @@ import AllSponsors from '../../components/AllSponsors.astro';
   </div>
 
   <!-- Sponsorship Information -->
-  <div class="w-full bg-text py-4">
-    <h2 class="text-3xl md:text-4xl text-center uppercase text-white font-bold">Sponsorships</h2>
+  <div class="w-full bg-grey-light/30 py-4">
+    <h2 class="text-3xl md:text-4xl text-center uppercase text-text font-bold">Sponsorships</h2>
   </div>
 
   <section class="py-16 md:py-20 bg-background">
@@ -48,8 +48,8 @@ import AllSponsors from '../../components/AllSponsors.astro';
   </section>
 
   <!-- Individual Donations -->
-  <div class="w-full bg-text py-4">
-    <h2 class="text-3xl md:text-4xl text-center uppercase text-white font-bold">Donations</h2>
+  <div class="w-full bg-grey-light/30 py-4">
+    <h2 class="text-3xl md:text-4xl text-center uppercase text-text font-bold">Donations</h2>
   </div>
 
   <section class="py-16 md:py-20 bg-grey-light/20">
@@ -69,8 +69,8 @@ import AllSponsors from '../../components/AllSponsors.astro';
   </section>
 
   <!-- Sponsorship Levels -->
-  <div class="w-full bg-text py-4">
-    <h2 class="text-3xl md:text-4xl text-center uppercase text-white font-bold">Sponsorship Levels</h2>
+  <div class="w-full bg-grey-light/30 py-4">
+    <h2 class="text-3xl md:text-4xl text-center uppercase text-text font-bold">Sponsorship Levels</h2>
   </div>
 
   <section class="py-16 md:py-20 bg-background">
@@ -79,7 +79,7 @@ import AllSponsors from '../../components/AllSponsors.astro';
         <!-- Platinum -->
         <div class="border-l-4 border-mrover-blue pl-6">
           <h3 class="text-2xl font-bold text-text mb-3">Platinum - $5,000 or greater</h3>
-          <ul class="space-y-2 text-grey-dark">
+          <ul class="space-y-2 text-text">
             <li>Includes all Gold, Silver, and Bronze benefits plus the following:</li>
             <li>Access to the team for videos, case studies, etc.</li>
             <li>Featured logo on our rover during competition.</li>
@@ -90,7 +90,7 @@ import AllSponsors from '../../components/AllSponsors.astro';
         <!-- Gold -->
         <div class="border-l-4 border-mrover-yellow pl-6">
           <h3 class="text-2xl font-bold text-text mb-3">Gold - $3000 or greater</h3>
-          <ul class="space-y-2 text-grey-dark">
+          <ul class="space-y-2 text-text">
             <li>Includes all Silver and Bronze benefits plus the following:</li>
             <li>Exclusive access to recruiting events hosted by MRover.</li>
             <li>Primary logos on website, t-shirts, and presentations</li>
@@ -101,7 +101,7 @@ import AllSponsors from '../../components/AllSponsors.astro';
         <!-- Silver -->
         <div class="border-l-4 border-grey pl-6">
           <h3 class="text-2xl font-bold text-text mb-3">Silver - $1000</h3>
-          <ul class="space-y-2 text-grey-dark">
+          <ul class="space-y-2 text-text">
             <li>Includes all Bronze benefits plus the following:</li>
             <li>Secondary logo on website, t-shirts, and presentations</li>
             <li>Exclusive meetings with the MRover team</li>
@@ -111,14 +111,14 @@ import AllSponsors from '../../components/AllSponsors.astro';
         <!-- Bronze -->
         <div class="border-l-4 border-grey-light pl-6">
           <h3 class="text-2xl font-bold text-text mb-3">Bronze - $500</h3>
-          <ul class="space-y-2 text-grey-dark">
+          <ul class="space-y-2 text-text">
             <li>Resume book containing resumes of all team members</li>
             <li>Tertiary logo on website, t-shirts, and all official presentations</li>
             <li>Monthly updates via email newsletter</li>
           </ul>
         </div>
 
-        <p class="text-grey-dark italic text-center pt-6">
+        <p class="text-text italic text-center pt-6">
           We are also willing to accommodate non-monetary donations.
         </p>
       </div>

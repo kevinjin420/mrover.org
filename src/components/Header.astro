@@ -1,6 +1,4 @@
 ---
-import Logo from './Logo.astro';
-
 interface Page {
   url: string;
   title: string;
@@ -11,11 +9,13 @@ interface Page {
 // Define navigation pages with their properties
 const navPages: Page[] = [
   { url: '/', title: 'Home', weight: 0, hideInHeader: false },
-  { url: '/about/', title: 'About', weight: 1, hideInHeader: false },
-  { url: '/rovers/', title: 'Rovers', weight: 3, hideInHeader: false },
-  { url: '/sponsors/', title: 'Sponsors', weight: 4, hideInHeader: true },
-  { url: '/join/', title: 'Join', weight: 5, hideInHeader: false },
-  { url: '/contact/', title: 'Contact', weight: 5, hideInHeader: false }
+  { url: '/about', title: 'About', weight: 1, hideInHeader: false },
+  { url: '/rovers', title: 'Rovers', weight: 2, hideInHeader: false },
+  { url: '/sponsors', title: 'Sponsors', weight: 3, hideInHeader: false },
+  { url: '/sponsor_us', title: 'Sponsor Us', weight: 4, hideInHeader: false },
+  { url: '/join', title: 'Join', weight: 5, hideInHeader: false },
+  { url: '/contact', title: 'Contact', weight: 6, hideInHeader: false },
+  { url: '/memory', title: 'Memory', weight: 7, hideInHeader: false }
 ];
 
 // Filter and sort pages for navigation
@@ -24,12 +24,12 @@ const visiblePages = navPages
   .sort((a, b) => a.weight - b.weight);
 ---
 
-<header class="sticky top-0 z-40 bg-background border-b border-grey-light shadow-sm">
+<header class="sticky top-0 z-40 bg-background border-b border-grey-light shadow-md">
   <div class="max-w-content mx-auto px-6 lg:px-8">
     <div class="flex items-center justify-between h-16">
       <!-- Logo -->
-      <a href="/" class="flex items-center text-2xl font-light text-grey-dark hover:text-text transition-colors">
-        <Logo />
+      <a href="/" class="flex items-center">
+        <img src="/logo_short.svg" alt="MRover Logo" class="h-8 md:h-10" />
       </a>
 
       <!-- Desktop Navigation -->
@@ -37,7 +37,7 @@ const visiblePages = navPages
         {visiblePages.map(page => (
           <a
             href={page.url}
-            class="text-sm font-medium uppercase text-grey-dark hover:text-mrover-yellow focus:text-mrover-yellow transition-colors"
+            class="text-sm font-semibold uppercase text-text hover:text-mrover-yellow focus:text-mrover-yellow transition-colors"
           >
             {page.title}
           </a>
@@ -57,7 +57,7 @@ const visiblePages = navPages
           {visiblePages.map(page => (
             <a
               href={page.url}
-              class="block px-4 py-3 text-sm uppercase text-grey-dark hover:bg-grey-light/20 hover:text-mrover-yellow transition-colors"
+              class="block px-4 py-3 text-sm font-semibold uppercase text-text hover:bg-grey-light/20 hover:text-mrover-yellow transition-colors"
             >
               {page.title}
             </a>

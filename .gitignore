@@ -1,7 +1,22 @@
-_site/
-.sass-cache/
-.jekyll-metadata
+# Build output
+docs/
+dist/
+.astro/
+
+# Dependencies
+node_modules/
+
+# Environment
+.env
+.env.production
+bun.lock
+
+# macOS
+.DS_Store
+
+# Editor
 *.swp
 *.swo
 *.swn
-node_modules/
+.vscode/
+.idea/

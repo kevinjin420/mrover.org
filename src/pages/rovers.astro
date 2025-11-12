@@ -1,6 +1,6 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import roverInfo from '../../data/roverInfo.json';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import roverInfo from '@/data/roverInfo.json';
 
 // Reverse to show newest rovers first
 const reversedRovers = [...roverInfo].reverse();
@@ -13,8 +13,8 @@ const reversedRovers = [...roverInfo].reverse();
   </div>
 
   <!-- Section Divider -->
-  <div class="w-full bg-text py-4">
-    <h2 class="text-3xl md:text-4xl text-center uppercase text-white font-bold">Our Rovers</h2>
+  <div class="w-full bg-grey-light/30 py-4">
+    <h2 class="text-3xl md:text-4xl text-center uppercase text-text font-bold">Our Rovers</h2>
   </div>
 
   <!-- Rover Tiles Grid -->

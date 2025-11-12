@@ -1,7 +1,7 @@
 ---
-import Header from '../components/Header.astro';
-import SocialMedia from '../components/SocialMedia.astro';
-import SponsorList from '../components/SponsorList.astro';
+import Header from '@/components/Header.astro';
+import SocialMedia from '@/components/SocialMedia.astro';
+import SponsorFooter from '@/components/SponsorFooter.astro';
 
 interface Props {
   title?: string;
@@ -162,8 +162,8 @@ const isProd = import.meta.env.PROD;
 
 <body class="font-lato text-base leading-normal text-text bg-background antialiased">
   {!isProd && (
-    <div class="fixed top-0 left-0 right-0 z-50 bg-yellow-200 text-center py-1 text-sm">
-      Non-production Environment (No Google Analytics)
+    <div class="fixed bottom-4 left-4 z-50 bg-yellow-400/80 backdrop-blur-sm text-text px-4 py-2 text-xs font-semibold rounded-full shadow-lg border border-yellow-500/50">
+      DEV
     </div>
   )}
 
@@ -175,7 +175,7 @@ const isProd = import.meta.env.PROD;
 
   <footer class="p-0">
     <SocialMedia />
-    <SponsorList />
+    <SponsorFooter />
   </footer>
 </body>
 </html>
