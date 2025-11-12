@@ -1,0 +1,201 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Home - University of Michigan Mars Rover Team">
+  <head>
+    <meta property="og:site_name" content="Michigan Mars Rover Team"/>
+    <meta property="og:title" content="Home Page"/>
+    <meta property="og:description" content="Sends user to the main pag for the Michigan Mars Rover Team"/>
+    <meta property="og:image" content="rover/rpverImages/2020/2020.jpg">
+    <meta property="og:url" content="https://mrover.org/">
+    <meta property="og:type" content="website"/>
+  </head>
+
+  <!-- Hero Section -->
+  <div class="relative min-h-[600px] md:min-h-[700px] bg-cover bg-center flex items-center justify-center" style="background-image: url('/images/rosie_circ.jpg');">
+    <div class="absolute inset-0 bg-gradient-to-br from-mrover-dark-blue/90 via-mrover-blue/80 to-black/60"></div>
+    <div class="relative z-10 text-center px-6 max-w-5xl py-20">
+      <h1 class="text-5xl md:text-7xl lg:text-8xl font-extrabold text-white mb-6 leading-tight">
+        Michigan Mars Rover Team
+      </h1>
+      <p class="text-xl md:text-2xl lg:text-3xl text-gray-100 mb-10 font-light">
+        Exploring the Future of Space Robotics
+      </p>
+      <div class="flex gap-4 justify-center flex-wrap">
+        <a href="/about" class="transform hover:scale-105 transition-transform">
+          <button class="px-10 py-4 text-lg font-semibold uppercase bg-mrover-blue text-white rounded-lg hover:bg-mrover-dark-blue shadow-xl hover:shadow-2xl transition-all border-2 border-white/20">
+            Learn More
+          </button>
+        </a>
+        <a href="/join" class="transform hover:scale-105 transition-transform">
+          <button class="px-10 py-4 text-lg font-semibold uppercase bg-mrover-yellow text-mrover-dark-blue rounded-lg hover:bg-yellow-400 shadow-xl hover:shadow-2xl transition-all">
+            Join the Team
+          </button>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Who we are -->
+  <section class="py-20 md:py-28 bg-background">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12">
+      <div class="grid md:grid-cols-2 gap-16 items-center">
+        <div class="space-y-6">
+          <div class="inline-block px-4 py-2 bg-mrover-blue/10 rounded-full">
+            <span class="text-mrover-blue font-semibold text-sm uppercase tracking-wider">About Us</span>
+          </div>
+          <h2 class="text-4xl md:text-5xl font-bold text-text leading-tight">Who we are</h2>
+          <p class="text-grey-dark text-lg leading-relaxed">
+            The Michigan Mars Rover Team (MRover) is a student-run, multidisciplinary organization whose mission is to
+            design and build a rover for the exploration of extraterrestrial environments. Our team consists of everyone from freshman to graduate students, representing majors from the
+            College of Engineering and the College of Literature, Science, and the Arts.
+          </p>
+          <p class="text-grey-dark text-lg leading-relaxed">
+            We strive to inspire and educate students about space, Mars exploration, and engineering, and we focus
+            on helping students grow as engineers.
+          </p>
+        </div>
+        <div class="relative h-80 md:h-96 rounded-2xl overflow-hidden shadow-2xl transform hover:scale-105 transition-transform duration-300">
+          <img src="/images/SAR_GOBLUESHOT.png" alt="Mars Rover Team" class="w-full h-full object-cover" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- What we do -->
+  <section class="py-20 md:py-28 bg-grey-light/20">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12">
+      <div class="grid md:grid-cols-2 gap-16 items-center">
+        <div class="order-2 md:order-1">
+          <div class="relative aspect-video rounded-2xl overflow-hidden shadow-2xl">
+            <iframe
+              class="w-full h-full"
+              src="https://www.youtube.com/embed/QMt2GuHuyyI?si=Z9nYiCQTfpR1cdBd"
+              title="MRover Video"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+            ></iframe>
+          </div>
+        </div>
+        <div class="space-y-6 order-1 md:order-2">
+          <div class="inline-block px-4 py-2 bg-mrover-yellow/20 rounded-full">
+            <span class="text-mrover-yellow font-semibold text-sm uppercase tracking-wider">Our Mission</span>
+          </div>
+          <h2 class="text-4xl md:text-5xl font-bold text-text leading-tight">What we do</h2>
+          <p class="text-grey-dark text-lg leading-relaxed">
+            As a competition-oriented team, our goal is to win the annual University Rover Challenge
+            (URC) at the Mars Society's Mars Desert Research Station near Hanksville, Utah.
+          </p>
+          <p class="text-grey-dark text-lg leading-relaxed">
+            The competition has gained worldwide attention from academia and industry, and teams from all over
+            the globe come to compete. This past summer, URC hosted 36 teams from fifteen countries. MRover
+            secured 11th place at the competition!
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Where we are -->
+  <section class="py-20 md:py-28 bg-background">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12">
+      <div class="grid md:grid-cols-2 gap-16 items-center">
+        <div class="space-y-6">
+          <div class="inline-block px-4 py-2 bg-mrover-blue/10 rounded-full">
+            <span class="text-mrover-blue font-semibold text-sm uppercase tracking-wider">Location</span>
+          </div>
+          <h2 class="text-4xl md:text-5xl font-bold text-text leading-tight">Where we are</h2>
+          <p class="text-grey-dark text-lg leading-relaxed">
+            We meet throughout the week at the Wilson Student Team Project Center on North Campus and hold weekly team
+            meetings at 12:00pm in 1109 FXB every Sunday. Feel free to stop by and see what we are up to.
+          </p>
+          <div class="flex items-center gap-3 text-mrover-blue">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+            </svg>
+            <span class="font-semibold">Wilson Student Team Project Center, North Campus</span>
+          </div>
+        </div>
+        <div class="relative h-80 md:h-96 rounded-2xl overflow-hidden shadow-2xl transform hover:scale-105 transition-transform duration-300">
+          <img src="/images/pit.jpg" alt="Team workspace" class="w-full h-full object-cover" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Our Rovers Section -->
+  <section class="py-20 md:py-28 bg-grey-light/20">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12">
+      <div class="text-center mb-12">
+        <div class="inline-block px-4 py-2 bg-mrover-yellow/20 rounded-full mb-6">
+          <span class="text-mrover-yellow font-semibold text-sm uppercase tracking-wider">Our Builds</span>
+        </div>
+        <h2 class="text-4xl md:text-5xl font-bold text-text mb-6 leading-tight">Our Rovers</h2>
+        <p class="text-grey-dark text-lg max-w-3xl mx-auto leading-relaxed">
+          Over the years, we've built multiple competition rovers, each pushing the boundaries of what's possible in Mars rover design and engineering innovation.
+        </p>
+      </div>
+      <div class="text-center mt-12">
+        <a href="/rovers" class="inline-block transform hover:scale-105 transition-transform">
+          <button class="px-10 py-4 text-lg font-semibold uppercase bg-mrover-blue text-white rounded-lg hover:bg-mrover-dark-blue shadow-xl hover:shadow-2xl transition-all border-2 border-mrover-blue/20">
+            Explore Our Rovers
+          </button>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Join/Donate CTA Section -->
+  <section class="py-20 md:py-28 bg-background">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12">
+      <div class="text-center mb-16">
+        <div class="inline-block px-4 py-2 bg-mrover-blue/10 rounded-full mb-6">
+          <span class="text-mrover-blue font-semibold text-sm uppercase tracking-wider">Take Action</span>
+        </div>
+        <h2 class="text-4xl md:text-5xl font-bold text-text mb-6 leading-tight">Get Involved</h2>
+        <p class="text-grey-dark text-lg max-w-3xl mx-auto leading-relaxed">
+          Whether you're a student looking to gain hands-on experience or a potential sponsor wanting to support innovation, there's a place for you in our mission.
+        </p>
+      </div>
+      <div class="grid md:grid-cols-2 gap-8 lg:gap-12">
+        <!-- Join Us -->
+        <div class="group relative text-center space-y-6 p-10 bg-gradient-to-br from-mrover-blue/5 to-mrover-blue/10 rounded-2xl border-2 border-mrover-blue/20 hover:border-mrover-blue transition-all duration-300 shadow-lg hover:shadow-2xl transform hover:-translate-y-2">
+          <div class="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-mrover-blue to-mrover-dark-blue rounded-2xl flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform">
+            <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+            </svg>
+          </div>
+          <h3 class="text-3xl font-bold text-text">Join us!</h3>
+          <p class="text-grey-dark text-lg leading-relaxed">
+            Interested in joining MRover? We are always looking for students passionate about space exploration and engineering.
+          </p>
+          <a href="/join" class="inline-block transform hover:scale-105 transition-transform">
+            <button class="px-10 py-4 text-lg font-semibold uppercase bg-mrover-blue text-white rounded-lg hover:bg-mrover-dark-blue shadow-xl hover:shadow-2xl transition-all">
+              How to Join
+            </button>
+          </a>
+        </div>
+
+        <!-- Sponsor Us -->
+        <div class="group relative text-center space-y-6 p-10 bg-gradient-to-br from-mrover-yellow/5 to-mrover-yellow/10 rounded-2xl border-2 border-mrover-yellow/20 hover:border-mrover-yellow transition-all duration-300 shadow-lg hover:shadow-2xl transform hover:-translate-y-2">
+          <div class="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-mrover-yellow to-yellow-400 rounded-2xl flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform">
+            <svg class="w-10 h-10 text-mrover-dark-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </div>
+          <h3 class="text-3xl font-bold text-text">Sponsor us!</h3>
+          <p class="text-grey-dark text-lg leading-relaxed">
+            Interested in helping us win the University Rover Challenge? Any contribution helps. We would greatly appreciate your support.
+          </p>
+          <a href="/donate" class="inline-block transform hover:scale-105 transition-transform">
+            <button class="px-10 py-4 text-lg font-semibold uppercase bg-mrover-yellow text-mrover-dark-blue rounded-lg hover:bg-yellow-400 shadow-xl hover:shadow-2xl transition-all">
+              Sponsor us
+            </button>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

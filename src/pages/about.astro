@@ -1,0 +1,316 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="About - University of Michigan Mars Rover Team">
+  <!-- Hero -->
+  <div class="relative h-96 md:h-[500px] lg:h-[600px] bg-cover bg-center" style="background-image: url('/images/rover-on-ridge.jpg');">
+    <div class="absolute inset-0 bg-black/40"></div>
+  </div>
+
+  <!-- Section Divider -->
+  <div class="w-full bg-text py-4">
+    <h2 class="text-3xl md:text-4xl text-center uppercase text-white font-bold">The Challenge</h2>
+  </div>
+
+  <!-- Challenge Section -->
+  <section class="py-12 md:py-16 bg-background">
+    <div class="max-w-6xl mx-auto px-6 lg:px-8">
+      <div class="prose prose-lg max-w-none">
+        <p>
+          MRover's primary goal is to win the University Rover Challenge (URC).
+          Student teams from all over the world compete in the URC to design and build the best rover for assisting
+          future astronauts.
+          The URC is hosted by The Mars Society, the largest advocacy group for the exploration and settlement of Mars,
+          and it takes place at the Mars Research Station in the Utah Desert.
+          The competition consists of four events:
+        </p>
+        <ul class="space-y-2 mb-6">
+          <li>Extreme Retrieval and Delivery - Traveling over tough terrain</li>
+          <li>Equipment Servicing - Manipulating various pieces of equipment with the robotic arm</li>
+          <li>Science - Acquiring soil samples from a chosen site and evaluating it for signs of life</li>
+          <li>Autonomous Navigation - Driving to GPS coordinates and searching for markers nearby</li>
+        </ul>
+
+        <p>
+          CIRC is hosted by the Canadian Space Technology Advancement Group and takes place in Drumheller, Alberta. The
+          competition consists of five events:
+        </p>
+        <ul class="space-y-2">
+          <li>Boneyard Salvage - Assess the reactor site's location, damage, radiation and hazards</li>
+          <li>Reactor Maintenance - Replace depleted reactor rods while managing temperature and coolant levels</li>
+          <li>Arm Dexterity - Manipulating equipment and carrying cargo to service a lander</li>
+          <li>Traversal - Autonomously locate stations and follow a trail of lights at night</li>
+          <li>Mars Murder Mystery - Photograph a murder scene, scan ArUco tags, and return items</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mechanical Team -->
+  <div class="w-full bg-text py-4">
+    <h2 class="text-3xl md:text-4xl text-center uppercase text-white font-bold">Mechanical Team</h2>
+  </div>
+
+  <section class="py-12 md:py-16 bg-grey-light/10">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Robotic Arm -->
+        <div class="text-center space-y-4">
+          <div class="w-40 h-32 mx-auto bg-grey-light/30 rounded-lg overflow-hidden">
+            <img src="/RA_2025.png" alt="Robotic Arm" class="w-full h-full object-cover" />
+          </div>
+          <h3 class="text-xl font-bold text-text">Robotic Arm</h3>
+          <p class="text-grey-dark leading-relaxed text-sm px-4">
+            The Robotic Arm subteam designs and builds a five degree-of-freedom robotic arm responsible for
+            completing tasks in the "Equipment Servicing" and "Extreme Retrieval and Delivery" portions of the
+            competition. The arm is able to lift objects, open drawers, push buttons, type on a keyboard, and accomplish
+            other precise movements.
+          </p>
+        </div>
+
+        <!-- Mobility -->
+        <div class="text-center space-y-4">
+          <div class="w-40 h-32 mx-auto bg-grey-light/30 rounded-lg overflow-hidden">
+            <img src="/MOB_2025.png" alt="Mobility" class="w-full h-full object-cover" />
+          </div>
+          <h3 class="text-xl font-bold text-text">Mobility</h3>
+          <p class="text-grey-dark leading-relaxed text-sm px-4">
+            The Mobility subteam develops and builds the drive and suspension systems to
+            navigate through rocks and rough terrain in each competition mission. They work
+            to provide reliable driving and agile maneuvering, while also protecting sensitive
+            onboard equipment from impacts and vibration.
+          </p>
+        </div>
+
+        <!-- Chassis and Mounts -->
+        <div class="text-center space-y-4 md:col-span-2 lg:col-span-1">
+          <div class="w-40 h-32 mx-auto bg-grey-light/30 rounded-lg overflow-hidden">
+            <img src="/CHASSIS_2025.jpg" alt="Chassis" class="w-full h-full object-cover" />
+          </div>
+          <h3 class="text-xl font-bold text-text">Chassis and Mounts</h3>
+          <p class="text-grey-dark leading-relaxed text-sm px-4">
+            The Chassis and Mounts subteam develops a lightweight and strong chassis that is
+            optimized for the integration of all our sub-systems. They also develop our gimbal
+            camera for operation, physical enclosures for electrical components and
+            wire management for a professional-looking rover.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Science-Mechanical -->
+  <div class="w-full bg-text py-4">
+    <h2 class="text-3xl md:text-4xl text-center uppercase text-white font-bold">Science-Mechanical</h2>
+  </div>
+
+  <section class="py-12 md:py-16 bg-background">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+        <!-- Science Payload Instrumentation -->
+        <div class="text-center space-y-4">
+          <div class="w-40 h-32 mx-auto bg-grey-light/30 rounded-lg overflow-hidden">
+            <img src="/SPI_2025.png" alt="Science Payload Instrumentation" class="w-full h-full object-cover" />
+          </div>
+          <h3 class="text-xl font-bold text-text">Science Payload Instrumentation</h3>
+          <p class="text-grey-dark leading-relaxed text-sm px-4">
+            Science Payload Instrumentation subteam brings together our sensors and tests,
+            performing in-situ sampling. Their science box is able to perform on-board science
+            and life-detection tests required for URC's Science Mission. The SPI system also has
+            sensors for sampling the surrounding environment and external cameras to analyze rock formations.
+          </p>
+        </div>
+
+        <!-- Science Payload Acquisition -->
+        <div class="text-center space-y-4">
+          <div class="w-40 h-32 mx-auto bg-grey-light/30 rounded-lg overflow-hidden">
+            <img src="/SPA_2025.png" alt="Science Payload Acquisition" class="w-full h-full object-cover" />
+          </div>
+          <h3 class="text-xl font-bold text-text">Science Payload Acquisition</h3>
+          <p class="text-grey-dark leading-relaxed text-sm px-4">
+            The Sample Acquisition subteam focuses on developing and testing the mechanics of soil collection.
+            In 2025, the sample acquisition system consisted of a linear actuator-driven sheathed auger
+            collection system that drills into the ground, coring up to 10-cm deep, which then transports
+            soil samples upwards and into the SPI system.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Science -->
+  <div class="w-full bg-text py-4">
+    <h2 class="text-3xl md:text-4xl text-center uppercase text-white font-bold">Science</h2>
+  </div>
+
+  <section class="py-12 md:py-16 bg-grey-light/10">
+    <div class="max-w-4xl mx-auto px-6 lg:px-8">
+      <div class="text-center space-y-4 max-w-2xl mx-auto">
+        <div class="w-40 h-32 mx-auto bg-grey-light/30 rounded-lg overflow-hidden">
+          <img src="/strips.jpg" alt="Astrobiology" class="w-full h-full object-cover" />
+        </div>
+        <h3 class="text-xl font-bold text-text">Astrobiology</h3>
+        <p class="text-grey-dark leading-relaxed px-4">
+          The Astrobiology team is responsible for developing tests to analyze soil and rock samples for signs of
+          past or present life. They research different indicators of life, identify possible tests for those
+          indicators, and then work with the Science Payload Instrumentation subteam and others to make those tests
+          work in real-time onboard the rover for URC. And the Astrobiology team conducts the tests themselves at CIRC
+          (where onboard testing is not required).
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Software Team -->
+  <div class="w-full bg-text py-4">
+    <h2 class="text-3xl md:text-4xl text-center uppercase text-white font-bold">Software Team</h2>
+  </div>
+
+  <section class="py-12 md:py-16 bg-background">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="text-center mb-8">
+        <p class="text-lg">
+          View our open source code at: <a href="https://github.com/umrover/mrover-ros" target="_blank" class="text-mrover-blue hover:underline font-medium">github.com/umrover/mrover-ros</a>
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-8">
+        <!-- Autonomy -->
+        <div class="text-center space-y-4">
+          <div class="w-40 h-32 mx-auto bg-grey-light/30 rounded-lg overflow-hidden">
+            <img src="/Autonomy_2025.png" alt="Autonomy" class="w-full h-full object-cover" />
+          </div>
+          <h3 class="text-xl font-bold text-text">Autonomy</h3>
+          <p class="text-grey-dark leading-relaxed text-sm px-4">
+            Our Autonomy team is further divided into 3 subteams: Navigation, Perception, and Localization.
+            Navigation plans and executes a path for the rover to search an area while avoiding obstacles.
+            Perception identifies key features of the environment (objective markers) and obstacles in the path.
+            The rover's navigation system uses A* to path plan around obstacles for the autonomy mission.
+            The cost map grid is periodically centered on the rover to support obstacle avoidance over longer
+            distances without needing a larger grid. Recent autonomy projects include working on integrating
+            inverse kinematics onto our rover's robotic arm.
+          </p>
+        </div>
+
+        <!-- Embedded Software -->
+        <div class="text-center space-y-4">
+          <div class="w-40 h-32 mx-auto bg-grey-light/30 rounded-lg overflow-hidden">
+            <img src="/ESW.jpg" alt="Embedded Software" class="w-full h-full object-cover" />
+          </div>
+          <h3 class="text-xl font-bold text-text">Embedded Software</h3>
+          <p class="text-grey-dark leading-relaxed text-sm px-4">
+            The Embedded Software subteam writes low-level driver code that allows the other programming subteams to
+            utilize the electronic equipment on the rover. They work primarily with libraries in C and python, provided
+            by manufacturers, to abstract the functions needed by the other teams for easy use.
+          </p>
+        </div>
+
+        <!-- Teleoperation -->
+        <div class="text-center space-y-4">
+          <div class="w-40 h-32 mx-auto bg-grey-light/30 rounded-lg overflow-hidden">
+            <img src="/IK2022.gif" alt="Teleoperation" class="w-full h-full object-cover" />
+          </div>
+          <h3 class="text-xl font-bold text-text">Teleoperation</h3>
+          <p class="text-grey-dark leading-relaxed text-sm px-4">
+            The Teleoperation subteam creates the interface between driver and rover.
+            They maintain the GUIs used at the base station used to control the rover
+            and view system metrics, as well as develop control solutions for complex
+            systems (such as our robotic arm) to improve accuracy and usability.
+            Disjointly, the Teleoperation subteam maintains and improves general software
+            infrastructure such as our custom build system.
+          </p>
+        </div>
+
+        <!-- Drone -->
+        <div class="text-center space-y-4">
+          <div class="w-40 h-32 mx-auto bg-grey-light/30 rounded-lg overflow-hidden">
+            <img src="/DRONE_2025.png" alt="Drone" class="w-full h-full object-cover" />
+          </div>
+          <h3 class="text-xl font-bold text-text">Drone</h3>
+          <p class="text-grey-dark leading-relaxed text-sm px-4">
+            The Drone subteam is developing a drone to be used in collaboration with the Rover
+            during the delivery mission at URC. Our drone is capable of both manual and autonomous
+            operation and can carry out tasks such as reading signs, locating objects, and acting
+            as a backup communications link between the Rover and the team. This year's projects
+            include improving the drone's communication systems, upgrading the mechanical structure
+            to increase flight time, and adding custom autonomous capability for specific mission tasks.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Electrical Team -->
+  <div class="w-full bg-text py-4">
+    <h2 class="text-3xl md:text-4xl text-center uppercase text-white font-bold">Electrical Team</h2>
+  </div>
+
+  <section class="py-12 md:py-16 bg-grey-light/10">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="text-center mb-8">
+        <p class="text-lg">
+          View our open source boards at: <a href="https://github.com/umrover/mrover-electrical" target="_blank" class="text-mrover-blue hover:underline font-medium">github.com/umrover/mrover-electrical</a>
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Power -->
+        <div class="text-center space-y-4">
+          <div class="w-40 h-32 mx-auto bg-grey-light/30 rounded-lg overflow-hidden">
+            <img src="/EBOX.jpg" alt="Power" class="w-full h-full object-cover" />
+          </div>
+          <h3 class="text-xl font-bold text-text">Power</h3>
+          <p class="text-grey-dark leading-relaxed text-sm px-4">
+            The Power subteam is in charge of providing power to the rover and managing the
+            electronics box. They develop custom solutions to distribute power to key systems
+            around the rover and partner with all mechanical subteams to design the best
+            power delivery system for their needs. This year they look forward to improving their custom battery design.
+          </p>
+        </div>
+
+        <!-- Embedded Hardware -->
+        <div class="text-center space-y-4">
+          <div class="w-40 h-32 mx-auto bg-grey-light/30 rounded-lg overflow-hidden">
+            <img src="/EHW2022.jpg" alt="Embedded Hardware" class="w-full h-full object-cover" />
+          </div>
+          <h3 class="text-xl font-bold text-text">Embedded Hardware</h3>
+          <p class="text-grey-dark leading-relaxed text-sm px-4">
+            The Embedded Hardware Handling subteam works on controlling actuators, receiving signals from sensors, and
+            managing data connections from the electronics box to external components. They design custom printed
+            circuit boards for power distribution, sensor interfacing and motor control.
+          </p>
+        </div>
+
+        <!-- Communications -->
+        <div class="text-center space-y-4 md:col-span-2 lg:col-span-1">
+          <div class="w-40 h-32 mx-auto bg-grey-light/30 rounded-lg overflow-hidden">
+            <img src="/Comms2022.jpg" alt="Communications" class="w-full h-full object-cover" />
+          </div>
+          <h3 class="text-xl font-bold text-text">Communications</h3>
+          <p class="text-grey-dark leading-relaxed text-sm px-4">
+            The Communications subteam is responsible for ensuring a strong, wireless RF communication link between the
+            base station and the rover. This includes testing various radio and antenna equipment in a competition-like
+            environment to select the best RF system for the rover.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Business Team -->
+  <div class="w-full bg-text py-4">
+    <h2 class="text-3xl md:text-4xl text-center uppercase text-white font-bold">Business Team</h2>
+  </div>
+
+  <section class="py-12 md:py-16 bg-background">
+    <div class="max-w-4xl mx-auto px-6 lg:px-8">
+      <p class="text-grey-dark leading-relaxed text-center">
+        The business team organizes corporate sponsorships, grants and other fundraising
+        opportunities, such as Giving Blueday, for MRover. They are also responsible for creating team merchandise
+        each semester. The business team keeps the team website up to date and set up recruitment and community outreach events.
+        Most members of the business team are also members of other subteams!
+      </p>
+    </div>
+  </section>
+</BaseLayout>
