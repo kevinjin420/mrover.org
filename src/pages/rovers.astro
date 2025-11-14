@@ -25,7 +25,7 @@ const reversedRovers = [...roverInfo].reverse();
           <a
             href="#content"
             id={rover.year}
-            class="relative group block aspect-[4/3] bg-cover bg-center rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow cursor-pointer"
+            class="relative group block aspect-4/3 bg-cover bg-center rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow cursor-pointer"
             style={`background-image: url('/${rover.image_path}');`}
           >
             <!-- Hidden data -->
@@ -41,7 +41,7 @@ const reversedRovers = [...roverInfo].reverse();
 
             <!-- Overlay -->
             <div class="absolute inset-0 bg-mrover-blue/0 group-hover:bg-mrover-blue/90 transition-all duration-300 flex items-center justify-center">
-              <div class="text-white text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <div class="text-michigan-blue text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 <h3 class="text-4xl font-bold mb-2">{rover.year}</h3>
                 <p class="text-xl text-grey-light">{rover.name}</p>
               </div>

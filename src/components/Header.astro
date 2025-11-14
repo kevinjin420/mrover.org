@@ -24,7 +24,7 @@ const visiblePages = navPages
   .sort((a, b) => a.weight - b.weight);
 ---
 
-<header class="sticky top-0 z-40 bg-background border-b border-grey-light shadow-md">
+<header class="sticky top-0 z-40 bg-white border-b border-gray-200 shadow-md">
   <div class="max-w-content mx-auto px-6 lg:px-8">
     <div class="flex items-center justify-between h-16">
       <!-- Logo -->
@@ -33,11 +33,11 @@ const visiblePages = navPages
       </a>
 
       <!-- Desktop Navigation -->
-      <nav class="hidden md:flex items-center space-x-8">
+      <nav class="hidden md:flex items-center space-x-6">
         {visiblePages.map(page => (
           <a
             href={page.url}
-            class="text-sm font-semibold uppercase text-text hover:text-mrover-yellow focus:text-mrover-yellow transition-colors"
+            class="text-sm font-semibold uppercase text-michigan-blue hover:text-mrover-orange focus:text-mrover-orange transition-colors"
           >
             {page.title}
           </a>
@@ -45,23 +45,25 @@ const visiblePages = navPages
       </nav>
 
       <!-- Mobile Menu Button -->
-      <div class="md:hidden group relative">
-        <button class="p-2 text-grey-dark hover:text-text">
-          <svg viewBox="0 0 24 24" class="w-6 h-6" fill="currentColor">
-            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
-          </svg>
-        </button>
+      <div class="md:hidden">
+        <div class="group relative">
+          <button class="p-2 text-grey-dark hover:text-michigan-blue cursor-pointer">
+            <svg viewBox="0 0 24 24" class="w-6 h-6" fill="currentColor">
+              <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+            </svg>
+          </button>
 
-        <!-- Mobile Dropdown -->
-        <div class="hidden group-hover:block absolute right-0 top-full mt-2 w-48 bg-background border border-grey-light rounded-lg shadow-lg overflow-hidden">
-          {visiblePages.map(page => (
-            <a
-              href={page.url}
-              class="block px-4 py-3 text-sm font-semibold uppercase text-text hover:bg-grey-light/20 hover:text-mrover-yellow transition-colors"
-            >
-              {page.title}
-            </a>
-          ))}
+          <!-- Mobile Dropdown -->
+          <div class="hidden group-hover:block absolute right-0 top-full mt-2 w-48 bg-white dark:bg-mrover-blue border border-gray-200 dark:border-grey-dark rounded-lg shadow-lg overflow-hidden">
+            {visiblePages.map(page => (
+              <a
+                href={page.url}
+                class="block px-4 py-3 text-sm font-semibold uppercase text-michigan-blue dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-grey-dark/20 hover:text-mrover-orange transition-colors"
+              >
+                {page.title}
+              </a>
+            ))}
+          </div>
         </div>
       </div>
     </div>

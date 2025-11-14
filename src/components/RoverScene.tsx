@@ -109,7 +109,7 @@ export default function RoverScene() {
     };
 
     // Load URDF
-    const urdfLoader = new URDFLoader(manager);
+    const urdfLoader = new (URDFLoader as any)(manager);
     urdfLoader.packages = { '': '/urdf' };
     urdfLoader.load('/urdf/rover/rover.urdf', (robot: any) => {
       rover = robot;

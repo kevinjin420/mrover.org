@@ -5,10 +5,10 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 <BaseLayout title="About 3D - University of Michigan Mars Rover Team">
   <!-- Hero Section -->
       <section class="hero-section h-screen flex items-center justify-center relative overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-br from-mrover-dark-blue via-mrover-blue to-black"></div>
+        <div class="absolute inset-0 bg-linear-to-br from-mrover-dark-blue via-mrover-blue to-black"></div>
         <div class="absolute inset-0 opacity-20" style="background-image: url('/images/rover-on-ridge.jpg'); background-size: cover; background-position: center;"></div>
         <div class="relative z-10 text-center px-6 max-w-5xl">
-          <h1 class="text-6xl md:text-8xl font-extrabold text-white mb-6 opacity-0 hero-title">
+          <h1 class="text-6xl md:text-8xl font-extrabold text-michigan-blue mb-6 opacity-0 hero-title">
             About MRover
           </h1>
           <p class="text-xl md:text-2xl text-gray-200 opacity-0 hero-subtitle">
@@ -16,7 +16,7 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
           </p>
         </div>
         <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg class="w-6 h-6 text-michigan-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
           </svg>
         </div>
@@ -27,7 +27,7 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
         <div class="max-w-6xl mx-auto px-6 lg:px-8">
           <div class="section-header mb-12">
             <h2 class="text-5xl md:text-6xl font-bold text-text mb-4">The Challenge</h2>
-            <div class="w-24 h-1 bg-mrover-yellow"></div>
+            <div class="w-24 h-1 bg-mrover-orange"></div>
           </div>
 
           <div class="section-content space-y-8">
@@ -65,23 +65,23 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
                 CIRC is hosted by the Canadian Space Technology Advancement Group and takes place in Drumheller, Alberta.
               </p>
               <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-                <div class="mission-item p-4 bg-mrover-yellow/10 rounded-lg">
+                <div class="mission-item p-4 bg-mrover-orange/10 rounded-lg">
                   <h4 class="font-bold text-mrover-dark-blue mb-2">Boneyard Salvage</h4>
                   <p class="text-sm text-grey-dark">Assess reactor site location, damage, radiation and hazards</p>
                 </div>
-                <div class="mission-item p-4 bg-mrover-yellow/10 rounded-lg">
+                <div class="mission-item p-4 bg-mrover-orange/10 rounded-lg">
                   <h4 class="font-bold text-mrover-dark-blue mb-2">Reactor Maintenance</h4>
                   <p class="text-sm text-grey-dark">Replace depleted reactor rods</p>
                 </div>
-                <div class="mission-item p-4 bg-mrover-yellow/10 rounded-lg">
+                <div class="mission-item p-4 bg-mrover-orange/10 rounded-lg">
                   <h4 class="font-bold text-mrover-dark-blue mb-2">Arm Dexterity</h4>
                   <p class="text-sm text-grey-dark">Manipulate equipment and carry cargo</p>
                 </div>
-                <div class="mission-item p-4 bg-mrover-yellow/10 rounded-lg">
+                <div class="mission-item p-4 bg-mrover-orange/10 rounded-lg">
                   <h4 class="font-bold text-mrover-dark-blue mb-2">Traversal</h4>
                   <p class="text-sm text-grey-dark">Autonomously locate stations</p>
                 </div>
-                <div class="mission-item p-4 bg-mrover-yellow/10 rounded-lg md:col-span-2 lg:col-span-1">
+                <div class="mission-item p-4 bg-mrover-orange/10 rounded-lg md:col-span-2 lg:col-span-1">
                   <h4 class="font-bold text-mrover-dark-blue mb-2">Mars Murder Mystery</h4>
                   <p class="text-sm text-grey-dark">Photograph crime scene, scan ArUco tags</p>
                 </div>
@@ -96,7 +96,7 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
         <div class="max-w-7xl mx-auto px-6 lg:px-8">
           <div class="section-header mb-12 text-center">
             <h2 class="text-5xl md:text-6xl font-bold text-text mb-4">Mechanical Team</h2>
-            <div class="w-24 h-1 bg-mrover-yellow mx-auto"></div>
+            <div class="w-24 h-1 bg-mrover-orange mx-auto"></div>
           </div>
 
           <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -143,16 +143,16 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
       </section>
 
       <!-- CTA Section -->
-      <section class="section min-h-screen flex items-center justify-center py-24 bg-gradient-to-br from-mrover-blue to-mrover-dark-blue relative overflow-hidden">
+      <section class="section min-h-screen flex items-center justify-center py-24 bg-linear-to-br from-mrover-blue to-mrover-dark-blue relative overflow-hidden">
         <div class="absolute inset-0 opacity-10" style="background-image: url('/images/rover-on-ridge.jpg'); background-size: cover; background-position: center;"></div>
         <div class="relative z-10 text-center px-6 max-w-4xl">
-          <h2 class="text-5xl md:text-7xl font-bold text-white mb-8">Join Our Mission</h2>
+          <h2 class="text-5xl md:text-7xl font-bold text-michigan-blue mb-8">Join Our Mission</h2>
           <p class="text-xl md:text-2xl text-gray-200 mb-12 leading-relaxed">
             Be part of a team that's pushing the boundaries of space robotics and engineering excellence.
           </p>
           <div class="flex flex-wrap gap-6 justify-center">
             <a href="/join">
-              <button class="px-10 py-4 text-lg font-semibold uppercase bg-mrover-yellow text-text rounded-lg hover:bg-mrover-yellow/90 shadow-xl hover:shadow-2xl transition-all transform hover:scale-105">
+              <button class="px-10 py-4 text-lg font-semibold uppercase bg-mrover-orange text-text rounded-lg hover:bg-mrover-orange/90 shadow-xl hover:shadow-2xl transition-all transform hover:scale-105">
                 Join the Team
               </button>
             </a>
@@ -293,12 +293,12 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
   }
 
   ::-webkit-scrollbar-thumb {
-    background: #0F3377;
+    background: #00274C;
     border-radius: 5px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: #FBC421;
+    background: #FF6B35;
   }
 </style>
 </BaseLayout>

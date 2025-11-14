@@ -1,24 +1,97 @@
 ---
+import { SEO } from 'astro-seo';
 import Header from '@/components/Header.astro';
 import SocialMedia from '@/components/SocialMedia.astro';
 import SponsorFooter from '@/components/SponsorFooter.astro';
+import '@/styles/global.css';
 
 interface Props {
   title?: string;
   description?: string;
+  image?: string;
+  canonical?: string;
 }
 
 const {
   title = 'University of Michigan Mars Rover Team',
-  description = 'The Michigan Mars Rover Team (MRover) competes in the annual University Rover Challenge. In 2018, we placed 9th in the world and 3rd in the US. Our mission is to inspire students to pursue space exploration and engineering.'
+  description = 'The Michigan Mars Rover Team (MRover) competes in the annual University Rover Challenge. In 2018, we placed 9th in the world and 3rd in the US. Our mission is to inspire students to pursue space exploration and engineering.',
+  image = 'https://mrover.org/logo_short.svg',
+  canonical
 } = Astro.props;
 
 const isProd = import.meta.env.PROD;
+const siteUrl = 'https://mrover.org';
+const canonicalURL = canonical || new URL(Astro.url.pathname, siteUrl).toString();
 ---
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <SEO
+    title={title}
+    description={description}
+    canonical={canonicalURL}
+    openGraph={{
+      basic: {
+        title: title,
+        type: 'website',
+        image: image,
+        url: canonicalURL,
+      },
+      optional: {
+        description: description,
+        siteName: 'University of Michigan Mars Rover Team',
+      },
+      image: {
+        alt: 'MRover Logo',
+      },
+    }}
+    twitter={{
+      card: 'summary_large_image',
+      site: '@umarsteam',
+      creator: '@umarsteam',
+      title: title,
+      description: description,
+      image: image,
+      imageAlt: 'MRover Logo',
+    }}
+    extend={{
+      link: [
+        { rel: 'icon', type: 'image/x-icon', href: 'https://mrover.org/favicon.ico' },
+        { rel: 'apple-touch-icon', sizes: '180x180', href: 'https://mrover.org/icons/apple-touch-icon.png' },
+        { rel: 'icon', type: 'image/png', sizes: '32x32', href: 'https://mrover.org/icons/favicon-32x32.png' },
+        { rel: 'icon', type: 'image/png', sizes: '16x16', href: 'https://mrover.org/icons/favicon-16x16.png' },
+        { rel: 'manifest', href: '/manifest.json' },
+        { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Lato:400,300,700' },
+        { rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css' },
+      ],
+      meta: [
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+        { httpEquiv: 'X-UA-Compatible', content: 'IE=edge' },
+      ],
+    }}
+  />
+
+  <!-- Dark mode script - runs before page render to prevent flash -->
+  <script is:inline>
+    const theme = (() => {
+      if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+        return localStorage.getItem('theme');
+      }
+      if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        return 'dark';
+      }
+      return 'light';
+    })();
+
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+
+    window.localStorage.setItem('theme', theme);
+  </script>
   <!-- Google Analytics - only in production -->
   {isProd && (
     <>
@@ -31,139 +104,12 @@ const isProd = import.meta.env.PROD;
       </script>
     </>
   )}
-
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <title>{title}</title>
-  <meta name="description" content={description}>
-
-  <!-- Google Fonts -->
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,300,700' rel='stylesheet' type='text/css'>
-
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-  <!-- Favicon and Icons -->
-  <link rel="manifest" href="/manifest.json">
-  <link rel="shortcut icon" type="image/x-icon" href="https://mrover.org/favicon.ico">
-  <link rel="apple-touch-icon" sizes="180x180" href="https://mrover.org/icons/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="https://mrover.org/icons/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="https://mrover.org/icons/favicon-16x16.png">
-
-  <style is:global>
-    @import "tailwindcss";
-
-    /* Base typography and element styles */
-    body, h1, h2, h3, h4, h5, h6, p, blockquote, pre, hr, dl, dd, ol, ul, figure {
-      margin: 0;
-      padding: 0;
-    }
-
-    img {
-      max-width: 100%;
-      vertical-align: middle;
-    }
-
-    figure > img {
-      display: block;
-    }
-
-    ul, ol {
-      margin-left: 30px;
-    }
-
-    li > ul, li > ol {
-      margin-bottom: 0;
-    }
-
-    a {
-      color: #2a7ae2;
-      text-decoration: none;
-    }
-
-    a:visited {
-      color: #1756a9;
-    }
-
-    a:hover {
-      color: #111;
-      text-decoration: underline;
-    }
-
-    blockquote {
-      color: #828282;
-      border-left: 4px solid #d3d3d3;
-      padding-left: 15px;
-      font-size: 18px;
-      letter-spacing: -1px;
-      font-style: italic;
-    }
-
-    blockquote > :last-child {
-      margin-bottom: 0;
-    }
-
-    pre, code {
-      font-size: 15px;
-      border: 1px solid #d3d3d3;
-      border-radius: 3px;
-      background-color: #eef;
-    }
-
-    code {
-      padding: 1px 5px;
-    }
-
-    pre {
-      padding: 8px 12px;
-      overflow-x: auto;
-    }
-
-    pre > code {
-      border: 0;
-      padding-right: 0;
-      padding-left: 0;
-    }
-
-    /* Font Awesome icon hover effects */
-    .fa {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    .fa-instagram {
-      border-radius: 8px;
-      background-color: rgba(0,0,0,0);
-      padding: 2px 5px;
-    }
-
-    .fa-instagram:hover {
-      background: radial-gradient(circle at 33% 100%, #FED373 4%, #F15245 30%, #D92E7F 62%, #9B36B7 85%, #515ECF);
-      color: white;
-    }
-
-    .fa-twitter:hover {
-      color: #00aced;
-    }
-
-    .fa-youtube-play:hover {
-      color: #bb0000;
-    }
-
-    .center {
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-    }
-  </style>
 </head>
 
-<body class="font-lato text-base leading-normal text-text bg-background antialiased">
+<body class="font-lato text-base leading-normal text-michigan-blue antialiased">
   {!isProd && (
-    <div class="fixed bottom-4 left-4 z-50 bg-yellow-400/80 backdrop-blur-sm text-text px-4 py-2 text-xs font-semibold rounded-full shadow-lg border border-yellow-500/50">
-      DEV
+    <div class="fixed bottom-4 left-4 z-50 bg-yellow-500/20 backdrop-blur-sm text-text px-4 py-2 text-xs font-semibold rounded-full shadow-lg border border-orange-600/50">
+      DEV, NO ANALYTICS
     </div>
   )}
 
