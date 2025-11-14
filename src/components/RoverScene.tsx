@@ -1,8 +1,8 @@
-import { useEffect, useRef } from 'react';
-import * as THREE from 'three';
-import URDFLoader from 'urdf-loader';
-import GUI from 'lil-gui';
-import { gsap } from 'gsap';
+import { useEffect, useRef } from "react";
+import * as THREE from "three";
+import URDFLoader from "urdf-loader";
+import GUI from "lil-gui";
+import { gsap } from "gsap";
 
 const wheelStart = -14;
 
@@ -79,7 +79,7 @@ export default function RoverScene() {
     // Loading manager
     const manager = new THREE.LoadingManager();
     manager.onLoad = () => {
-      console.log('Loading complete!');
+      console.log("Loading complete!");
 
       // Animate the rover
       const timeline = gsap.timeline({ repeat: -1, yoyo: true });
@@ -87,7 +87,7 @@ export default function RoverScene() {
       timeline.to(rover.position, {
         x: 50,
         duration: 3,
-        ease: 'power2.inOut',
+        ease: "power2.inOut",
       });
 
       timeline.to(
@@ -95,7 +95,7 @@ export default function RoverScene() {
         {
           ...endJointValues,
           duration: 3,
-          ease: 'power2.inOut',
+          ease: "power2.inOut",
           onUpdate: () => {
             for (const jointName in jointTweenObject) {
               if (rover.joints[jointName]) {
@@ -104,14 +104,14 @@ export default function RoverScene() {
             }
           },
         },
-        '<'
+        "<"
       );
     };
 
     // Load URDF
     const urdfLoader = new (URDFLoader as any)(manager);
-    urdfLoader.packages = { '': '/urdf' };
-    urdfLoader.load('/urdf/rover/rover.urdf', (robot: any) => {
+    urdfLoader.packages = { "": "/urdf" };
+    urdfLoader.load("/urdf/rover/rover.urdf", (robot: any) => {
       rover = robot;
       robot.position.set(-100, 0, 0);
       robot.rotation.x = -Math.PI / 2;
@@ -127,24 +127,20 @@ export default function RoverScene() {
 
       // GUI setup for debugging
       robot.traverse((obj: any) => {
-        if (
-          obj.jointType === 'revolute' ||
-          obj.jointType === 'continuous' ||
-          obj.jointType === 'prismatic'
-        ) {
-          const name = obj.name || 'unnamed_joint';
+        if (obj.jointType === "revolute" || obj.jointType === "continuous" || obj.jointType === "prismatic") {
+          const name = obj.name || "unnamed_joint";
           const initialValue =
-            typeof endJointValues[name as keyof typeof endJointValues] === 'number'
+            typeof endJointValues[name as keyof typeof endJointValues] === "number"
               ? endJointValues[name as keyof typeof endJointValues]
-              : typeof obj.jointValue === 'number'
-              ? obj.jointValue
-              : 0;
+              : typeof obj.jointValue === "number"
+                ? obj.jointValue
+                : 0;
           const min = obj.limit?.lower ?? -Math.PI;
           const max = obj.limit?.upper ?? Math.PI;
           const paramObj = { value: initialValue };
           obj.setJointValue(initialValue);
           gui
-            .add(paramObj, 'value', min, max, 0.01)
+            .add(paramObj, "value", min, max, 0.01)
             .name(`${name} (${obj.jointType})`)
             .onChange((value: number) => {
               obj.setJointValue(value);
@@ -155,12 +151,7 @@ export default function RoverScene() {
 
     // Camera setup
     const sizes = { width: window.innerWidth, height: window.innerHeight };
-    const camera = new THREE.PerspectiveCamera(
-      75,
-      sizes.width / sizes.height,
-      0.1,
-      1000
-    );
+    const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 1000);
     camera.position.set(200, 150, 250);
     camera.lookAt(0, 0, 0);
     cameraGroup.add(camera);
@@ -186,22 +177,19 @@ export default function RoverScene() {
     };
 
     const handleDoubleClick = () => {
-      const fullscreenElement =
-        document.fullscreenElement || (document as any).webkitFullscreenElement;
+      const fullscreenElement = document.fullscreenElement || (document as any).webkitFullscreenElement;
       if (!fullscreenElement) {
         if (canvas.requestFullscreen) canvas.requestFullscreen();
-        else if ((canvas as any).webkitRequestFullscreen)
-          (canvas as any).webkitRequestFullscreen();
+        else if ((canvas as any).webkitRequestFullscreen) (canvas as any).webkitRequestFullscreen();
       } else {
         if (document.exitFullscreen) document.exitFullscreen();
-        else if ((document as any).webkitExitFullscreen)
-          (document as any).webkitExitFullscreen();
+        else if ((document as any).webkitExitFullscreen) (document as any).webkitExitFullscreen();
       }
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('resize', handleResize);
-    window.addEventListener('dblclick', handleDoubleClick);
+    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("resize", handleResize);
+    window.addEventListener("dblclick", handleDoubleClick);
 
     // Animation loop
     const tick = () => {
@@ -216,9 +204,9 @@ export default function RoverScene() {
 
     // Cleanup
     return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('resize', handleResize);
-      window.removeEventListener('dblclick', handleDoubleClick);
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("dblclick", handleDoubleClick);
       renderer.dispose();
       gui.destroy();
     };

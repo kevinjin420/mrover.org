@@ -1,5 +1,5 @@
-declare module 'urdf-loader' {
-  import * as THREE from 'three';
+declare module "urdf-loader" {
+  import * as THREE from "three";
 
   export default class URDFLoader {
     constructor();
