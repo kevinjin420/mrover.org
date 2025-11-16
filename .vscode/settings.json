@@ -20,5 +20,6 @@
   "prettier.documentSelectors": ["**/*.astro"],
   "files.associations": {
     "*.astro": "astro"
-  }
+  },
+  "css.lint.unknownAtRules": "ignore"
 }

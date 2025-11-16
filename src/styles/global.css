@@ -1,11 +1,13 @@
 @import "tailwindcss";
 
 @theme {
-  --color-mrover-blue: #00274c;
-  --color-mrover-dark-blue: #001935;
-  --color-mrover-orange: #FF8C00;
-  --color-mrover-yellow: #fbc421;
+  /* MRover Brand Colors */
   --color-michigan-blue: #00274c;
+  --color-michigan-maize: #fbc421;
+  --color-mrover-base: #003d6b;
+  --color-mrover-accent: #FF8C00;
+
+  /* Legacy colors (deprecated) */
   --color-brand: #2a7ae2;
   --color-text: #111;
   --color-background: #fdfdfd;
