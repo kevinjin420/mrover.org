@@ -174,6 +174,7 @@ const teams = [
   .about-content-wrapper {
     position: relative;
     clip-path: inset(0);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif; /* Ensure a clean font */
   }
 
   :global(footer) {
@@ -185,6 +186,7 @@ const teams = [
   main {
     position: relative;
     z-index: 1;
+    color: white;
   }
 
   .team-section {
@@ -193,116 +195,129 @@ const teams = [
 
   .sticky-container {
     position: sticky;
-    top: var(--header-height, 80px);
-    height: calc(100vh - var(--header-height, 80px));
+    top: 0;
+    height: 100vh;
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    justify-content: flex-end; /* Push content towards bottom/center */
+    padding-bottom: 4rem;
+    pointer-events: none; /* Let clicks pass through to canvas where possible */
+  }
+
+  /* Make header elements interactive */
+  .team-header, .horizontal-wrapper {
+    pointer-events: auto;
   }
 
   .team-header {
-    flex-shrink: 0;
-    padding: 1.5rem 3rem;
+    position: absolute;
+    top: var(--header-height, 80px);
+    left: 0;
+    width: 100%;
+    padding: 2rem 4rem;
     display: flex;
-    align-items: center;
-    gap: 2rem;
+    align-items: baseline;
+    gap: 1.5rem;
+    /* mix-blend-mode: overlay; -- Removed for better visibility */
   }
 
   .team-header-content {
     display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
+    flex-direction: row;
+    align-items: baseline;
+    gap: 1rem;
   }
 
   .team-label {
-    font-size: 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 600; /* Bolder */
     text-transform: uppercase;
-    letter-spacing: 0.2em;
-    color: var(--team-accent);
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+    letter-spacing: 0.3em;
+    color: rgba(255, 255, 255, 0.95); /* Brighter */
+    text-shadow: 0 2px 4px rgba(0,0,0,0.8); /* Stronger shadow */
   }
 
   .team-header h2 {
-    font-size: 2rem;
-    font-weight: 700;
+    font-size: 3rem;
+    font-weight: 800;
     text-transform: uppercase;
     color: #ffffff;
     margin: 0;
-    letter-spacing: 0.05em;
-    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.9), 0 0 40px var(--team-color);
+    letter-spacing: -0.02em;
+    line-height: 1;
+    opacity: 1; /* Full opacity */
+    text-shadow: 0 4px 12px rgba(0,0,0,0.8); /* Stronger shadow */
   }
 
   .team-header-line {
-    flex: 1;
-    height: 2px;
-    background: linear-gradient(to right, var(--team-accent), transparent);
-    opacity: 0.6;
-    box-shadow: 0 0 10px var(--team-color);
+    display: none;
   }
 
   .horizontal-wrapper {
-    flex: 1;
-    overflow: hidden;
+    width: 100%;
+    height: auto;
   }
 
   .horizontal-track {
     display: flex;
-    height: 100%;
     will-change: transform;
   }
 
   .subteam-panel {
     flex: 0 0 100vw;
     width: 100vw;
-    height: 100%;
+    padding: 0 4rem;
     display: flex;
-    align-items: center;
+    align-items: flex-end;
+    padding-bottom: 6vh;
   }
 
   .panel-content {
-    width: 100%;
-    height: 100%;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 3rem;
+    max-width: 600px;
   }
 
   .text-block {
-    display: inline-flex;
+    display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-self: center;
-    padding: 1.25rem 1.5rem;
-    background: linear-gradient(135deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.4) 100%);
-    border-radius: 0.75rem;
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    gap: 1rem;
+    background: transparent;
+    border: none;
+    backdrop-filter: none;
+    padding: 0;
   }
 
   .subteam-number {
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: var(--team-accent);
-    margin-bottom: 1rem;
+    font-size: 3rem;
+    font-weight: 200;
+    color: rgba(255, 255, 255, 0.6); /* More visible */
     font-family: monospace;
-    text-shadow: 0 0 10px var(--team-color);
+    line-height: 1;
+    margin-bottom: -0.5rem;
+    display: block;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.8);
   }
 
   .text-block h3 {
-    font-size: 2.5rem;
-    font-weight: 700;
+    font-size: 4rem;
+    font-weight: 800; /* Bolder */
     color: #ffffff;
-    margin: 0 0 1.5rem 0;
-    line-height: 1.1;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    margin: 0;
+    line-height: 0.9;
+    letter-spacing: -0.03em;
+    /* Removed transparent gradient text for solid white */
+    text-shadow: 0 4px 16px rgba(0,0,0,0.9); /* Heavy shadow */
   }
 
   .text-block p {
     font-size: 1.125rem;
-    color: rgba(255, 255, 255, 0.85);
-    line-height: 1.8;
-    margin: 0;
-    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+    color: #ffffff; /* Pure white */
+    line-height: 1.6;
+    margin-top: 1rem;
+    max-width: 450px;
+    font-weight: 400; /* Thicker weight */
+    text-shadow: 0 2px 4px rgba(0,0,0,0.8); /* Refined shadow */
+    /* Removed boxy background */
   }
 
   .mission-section {
@@ -311,34 +326,59 @@ const teams = [
     align-items: center;
     justify-content: center;
     position: relative;
+    pointer-events: none;
+  }
+
+  /* Cinematic vignette for mission section */
+  .mission-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(0,0,0,0.5) 0%, transparent 70%);
+    z-index: -1;
   }
 
   .mission-content {
-    max-width: 700px;
     text-align: center;
+    max-width: 900px;
+    background: transparent;
+    border: none;
+    backdrop-filter: none;
     padding: 2rem;
-    background: linear-gradient(135deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.4) 100%);
-    border-radius: 1rem;
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
   }
 
   .mission-content h1 {
-    font-size: 3.5rem;
-    font-weight: 700;
+    font-size: 6rem;
+    font-weight: 800;
     text-transform: uppercase;
     color: #ffffff;
-    margin: 0 0 1.5rem 0;
-    letter-spacing: 0.1em;
-    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.9), 0 0 40px rgba(255, 140, 0, 0.3);
+    margin: 0 0 2rem 0;
+    letter-spacing: -0.02em;
+    line-height: 0.9;
+    mix-blend-mode: normal; /* Normal blend mode */
+    opacity: 1;
+    text-shadow: 0 4px 20px rgba(0,0,0,0.8); /* Heavy shadow */
   }
 
   .mission-content p {
-    font-size: 1.25rem;
-    color: rgba(255, 255, 255, 0.85);
-    line-height: 1.8;
-    margin: 0;
-    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+    font-size: 1.5rem;
+    color: #ffffff;
+    line-height: 1.6;
+    font-weight: 400;
+    max-width: 600px;
+    margin: 0 auto;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.9);
+    /* Removed boxy background */
+  }
+
+  .sticky-container::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    /* Smooth gradient from bottom up to clear header area */
+    background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 30%, transparent 60%);
+    z-index: -1;
   }
 
   :global(html) {
@@ -346,43 +386,32 @@ const teams = [
   }
 
   @media (max-width: 768px) {
-    .mission-content {
-      margin: 0 1rem;
-      padding: 1.5rem;
-    }
-
-    .mission-content h1 {
-      font-size: 2rem;
-    }
-
-    .mission-content p {
-      font-size: 1rem;
-    }
-
     .team-header {
       padding: 1rem 1.5rem;
+      flex-direction: column;
+      gap: 0.5rem;
+      align-items: flex-start;
     }
 
     .team-header h2 {
-      font-size: 1.5rem;
+      font-size: 2rem;
     }
 
-    .panel-content {
-      grid-template-columns: 1fr;
-      padding: 0 1rem;
-    }
-
-    .text-block {
-      padding: 1rem 1.25rem;
-      margin-top: 1rem;
+    .subteam-panel {
+      padding: 0 1.5rem;
+      padding-bottom: 12vh;
     }
 
     .text-block h3 {
-      font-size: 1.75rem;
+      font-size: 2.5rem;
     }
 
-    .text-block p {
-      font-size: 1rem;
+    .mission-content h1 {
+      font-size: 3rem;
+    }
+    
+    .mission-content p {
+      font-size: 1.125rem;
     }
   }
 </style>

@@ -1,6 +1,6 @@
 import { Canvas, useThree, useFrame } from '@react-three/fiber'
-import { useGLTF, OrbitControls, Stars, useProgress } from '@react-three/drei'
-import { EffectComposer, Vignette } from '@react-three/postprocessing'
+import { useGLTF, OrbitControls, Stars, useProgress, Environment } from '@react-three/drei'
+import { EffectComposer, Vignette, Bloom } from '@react-three/postprocessing'
 import { useScroll } from '../../hooks/use-scroll'
 import { useStore } from '../../lib/store'
 import { useRef, Suspense, useCallback, useEffect, useState } from 'react'
@@ -196,8 +196,7 @@ function Rover({ onLoaded }: { onLoaded?: () => void }) {
     const currentTarget = SECTION_TARGETS[Math.min(sectionIndex, TOTAL_SECTIONS - 1)]
     const nextTarget = SECTION_TARGETS[Math.min(sectionIndex + 1, TOTAL_SECTIONS - 1)]
 
-    const rotationY = lerp(currentTarget.roverRotation, nextTarget.roverRotation, sectionProgress)
-    groupRef.current.rotation.y = rotationY + debugConfig.rover.rotationY
+    groupRef.current.rotation.y = debugConfig.rover.rotationY
     groupRef.current.scale.setScalar(debugConfig.rover.scale)
 
     // Animate joints if defined
@@ -288,14 +287,17 @@ function Scene({ orbitEnabled, onRoverLoaded }: { orbitEnabled: boolean; onRover
     <>
       <Atmosphere />
       <Stars radius={800} depth={150} count={5000} factor={6} fade speed={0.3} />
-      {/* Ambient fill */}
-      <ambientLight intensity={0.4} color={0xffe8d6} />
-      {/* Main sun */}
+      
+      {/* Environment provides realistic fill light and reflections */}
+      <Environment preset="sunset" environmentIntensity={0.7} />
+      
+      {/* Main Sun Light */}
       <directionalLight
         position={[200, 300, 150]}
-        intensity={2.2}
+        intensity={2.0}
         color={0xffeedd}
         castShadow
+        shadow-bias={-0.0005}
         shadow-mapSize-width={1024}
         shadow-mapSize-height={1024}
         shadow-camera-far={800}
@@ -304,23 +306,24 @@ function Scene({ orbitEnabled, onRoverLoaded }: { orbitEnabled: boolean; onRover
         shadow-camera-top={200}
         shadow-camera-bottom={-200}
       />
-      {/* Fill light from front-left to illuminate rover */}
-      <directionalLight position={[-100, 150, 200]} intensity={0.8} color={0xffeedd} />
-      {/* Subtle back fill */}
-      <directionalLight position={[-150, 80, -100]} intensity={0.3} color={0xddccbb} />
-      {/* Hemisphere light */}
-      <hemisphereLight args={[0xffeedd, 0x553322, 0.5]} />
+      
+      {/* Subtle rim light for definition */}
+      <directionalLight position={[-150, 50, -100]} intensity={0.5} color={0x445566} />
+
       <CameraController orbitEnabled={orbitEnabled} />
       <DebugControls enabled={orbitEnabled} />
+      
       <Suspense fallback={null}>
         <MarsLandscape />
       </Suspense>
       <Suspense fallback={null}>
         <Rover onLoaded={onRoverLoaded} />
       </Suspense>
-      {/* Post-processing - just vignette for performance */}
-      <EffectComposer multisampling={0}>
-        <Vignette darkness={0.35} offset={0.3} />
+      
+      {/* Post-processing */}
+      <EffectComposer disableNormalPass>
+        <Bloom luminanceThreshold={1} mipmapBlur intensity={0.5} radius={0.6} />
+        <Vignette darkness={0.4} offset={0.3} />
       </EffectComposer>
     </>
   )
