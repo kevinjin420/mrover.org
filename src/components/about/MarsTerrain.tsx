@@ -48,7 +48,7 @@ export function MarsTerrain() {
     }
   }, [])
 
-  useFrame((state) => {
+  useFrame(() => {
     if (!meshRef.current) return
     // meshRef.current.rotation.y = state.clock.getElapsedTime() * 0.01
   })
@@ -58,15 +58,11 @@ export function MarsTerrain() {
       <bufferGeometry>
         <bufferAttribute
           attach="attributes-position"
-          array={positions}
-          count={positions.length / 3}
-          itemSize={3}
+          args={[positions, 3]}
         />
         <bufferAttribute
           attach="index"
-          array={indices}
-          count={indices.length}
-          itemSize={1}
+          args={[indices, 1]}
         />
       </bufferGeometry>
       {/* Wireframe Material */}
