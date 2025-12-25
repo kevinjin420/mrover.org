@@ -321,7 +321,7 @@ function Scene({ orbitEnabled, onRoverLoaded }: { orbitEnabled: boolean; onRover
       </Suspense>
       
       {/* Post-processing */}
-      <EffectComposer disableNormalPass>
+      <EffectComposer enableNormalPass={false}>
         <Bloom luminanceThreshold={1} mipmapBlur intensity={0.5} radius={0.6} />
         <Vignette darkness={0.4} offset={0.3} />
       </EffectComposer>
