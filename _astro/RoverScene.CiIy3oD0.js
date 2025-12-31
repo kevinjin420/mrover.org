@@ -1,4 +1,4 @@
-import{S as P,G as T,C as Y,A as U,D as L,L as X,U as B,P as N,W as q,j as W}from"./URDFLoader.X4eCuIDd.js";import{r as F}from"./index.Cf1rOnxY.js";import{g as J}from"./index.CB87Sc6I.js";/**
+import{S as P,G as T,C as Y,A as U,D as L,L as X,U as B,P as N,W as q,j as W}from"./URDFLoader.CDAbG4Sf.js";import{r as F}from"./index.Cf1rOnxY.js";import{g as J}from"./index.CB87Sc6I.js";/**
  * lil-gui
  * https://lil-gui.georgealways.com
  * @version 0.21.0
