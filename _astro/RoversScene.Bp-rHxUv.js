@@ -1,0 +1,1 @@
+import{j as r}from"./index.DMryJHA2.js";import{StarsBackground as o}from"./StarsBackground.DTr9vfpy.js";import"./index.B531LMPj.js";function n(){return r.jsx(o,{})}export{n as RoversScene};
