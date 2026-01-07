@@ -1,1 +1,0 @@
-{"version":3,"file":"RoversScene.B3W98k2K.js","sources":["../../src/components/rovers/RoversScene.tsx"],"sourcesContent":["import { StarsBackground } from '@/components/StarsBackground'\n\nexport function RoversScene() {\n  return <StarsBackground />\n}\n"],"names":["RoversScene","StarsBackground"],"mappings":"kLAEO,SAASA,GAAc,CAC5B,aAAQC,EAAA,EAAgB,CAC1B"}
