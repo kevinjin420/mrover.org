@@ -1,3 +1,0 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["_astro/StarsBackground.CO8PECrU.js","_astro/react-vendor.DUzRhO8h.js","_astro/react-three.C4N6rgyr.js","_astro/three-core.BcmOdP5B.js"])))=>i.map(i=>d[i]);
-import{_ as o}from"./react-three.C4N6rgyr.js";import{a as t,j as r}from"./react-vendor.DUzRhO8h.js";import"./three-core.BcmOdP5B.js";const s=t.lazy(()=>o(()=>import("./StarsBackground.CO8PECrU.js"),__vite__mapDeps([0,1,2,3])).then(e=>({default:e.StarsBackground})));function d(){return r.jsx(t.Suspense,{fallback:r.jsx("div",{style:{position:"fixed",inset:"-50px",zIndex:-1,background:"#0a0808"}}),children:r.jsx(s,{})})}export{d as RoversScene};
-//# sourceMappingURL=RoversScene.BPE6xfCw.js.map
