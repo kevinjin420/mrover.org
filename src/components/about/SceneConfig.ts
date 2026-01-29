@@ -20,6 +20,15 @@ export interface SatelliteConfig {
   scale: number
 }
 
+export interface GLTFModelConfig {
+  modelPath: string
+  position: [number, number, number]
+  rotation: [number, number, number]
+  scale: number
+  wireframe?: WireframeConfig
+  floating?: boolean
+}
+
 export interface ModelConfig {
   urdfPath: string
   position: [number, number, number]
@@ -28,6 +37,7 @@ export interface ModelConfig {
   floating?: boolean
   terrain?: TerrainConfig
   wheelSpeed?: number
+  propellerSpeed?: number
 }
 
 export interface SectionTarget {
@@ -42,6 +52,7 @@ export interface SectionTarget {
   lookAt: { x: number; y: number; z: number }
   model?: ModelConfig
   satellite?: SatelliteConfig
+  gltfModel?: GLTFModelConfig
 }
 
 export interface Branch {
@@ -96,6 +107,18 @@ const WIREFRAME_PRESETS = {
     },
   },
   arm: {
+    threshold: DEFAULT_THRESHOLD,
+    color: BLUEPRINT_COLOR,
+    lineOpacity: BLUEPRINT_LINE_OPACITY,
+    meshOpacity: BLUEPRINT_MESH_OPACITY,
+  },
+  science: {
+    threshold: DEFAULT_THRESHOLD,
+    color: BLUEPRINT_COLOR,
+    lineOpacity: BLUEPRINT_LINE_OPACITY,
+    meshOpacity: BLUEPRINT_MESH_OPACITY,
+  },
+  drone: {
     threshold: DEFAULT_THRESHOLD,
     color: BLUEPRINT_COLOR,
     lineOpacity: BLUEPRINT_LINE_OPACITY,
@@ -198,6 +221,14 @@ const BRANCH_DEFINITIONS: Branch[] = [
         },
         camera: { x: -150, y: 70, z: 200 },
         lookAt: { x: 0, y: 20, z: 0 },
+        gltfModel: {
+          modelPath: '/models/science_payload.glb',
+          position: [0, 60, 0],
+          rotation: [0, -Math.PI / 5, 0],
+          scale: 0.4,
+          wireframe: WIREFRAME_PRESETS.science,
+          floating: true,
+        },
       },
       {
         name: 'astrobiology',
@@ -205,8 +236,8 @@ const BRANCH_DEFINITIONS: Branch[] = [
           name: 'Astrobiology',
           desc: 'Develops tests analyzing soil and rock samples for life indicators, researching tests and implementing them on the rover for competition use.',
         },
-        camera: { x: 150, y: 70, z: 200 },
-        lookAt: { x: 0, y: 20, z: 0 },
+        camera: { x: -20, y: 15, z: 150 },
+        lookAt: { x: 0, y: 25, z: 0 },
       },
     ],
   },
@@ -263,7 +294,7 @@ const BRANCH_DEFINITIONS: Branch[] = [
           rotation: [0, -Math.PI / 2, 0],
           wireframe: WIREFRAME_PRESETS.mechanical,
           terrain: {
-            radius: 150,
+            radius: 400,
             gridSize: 20,
             scrollSpeed: -60,
             roughness: 4,
@@ -303,8 +334,15 @@ const BRANCH_DEFINITIONS: Branch[] = [
           name: 'Drone',
           desc: 'Develops manual and autonomous drone capable of reading signs, locating objects, and communications support during delivery missions.',
         },
-        camera: { x: 60, y: 80, z: 280 },
-        lookAt: { x: 0, y: 20, z: 0 },
+        camera: { x: 400, y: 500, z: 450 },
+        lookAt: { x: -100, y: 200, z: 180 },
+        model: {
+          urdfPath: '/urdf/drone/drone.urdf',
+          position: [280, 400, 380],
+          rotation: [0, Math.PI/2, 0],
+          wireframe: WIREFRAME_PRESETS.drone,
+          propellerSpeed: 35,
+        },
       },
       {
         name: 'esw-controls',
@@ -343,6 +381,16 @@ function offsetSections(sections: SectionTarget[], yOffset: number): SectionTarg
           ],
         }
       : undefined,
+    gltfModel: s.gltfModel
+      ? {
+          ...s.gltfModel,
+          position: [
+            s.gltfModel.position[0],
+            s.gltfModel.position[1] + yOffset,
+            s.gltfModel.position[2],
+          ] as [number, number, number],
+        }
+      : undefined,
   }))
 }
 
@@ -366,10 +414,14 @@ export function getAllModels(): { section: SectionTarget; branchIndex: number }[
   return models
 }
 
+export function getAllGLTFModels(): SectionTarget[] {
+  return ALL_SECTIONS.filter((s) => s.gltfModel)
+}
+
 export function getBranchesWithModels(): number[] {
   const branches = new Set<number>()
   BRANCHES.forEach((branch, branchIndex) => {
-    if (branch.sections.some((s) => s.model)) {
+    if (branch.sections.some((s) => s.model || s.gltfModel)) {
       branches.add(branchIndex)
     }
   })

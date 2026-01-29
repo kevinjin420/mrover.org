@@ -54,6 +54,7 @@ interface URDFModelProps {
   wireframe?: WireframeConfig
   floating?: boolean
   wheelSpeed?: number
+  propellerSpeed?: number
   onLoaded?: () => void
 }
 
@@ -74,6 +75,13 @@ const WHEEL_JOINTS = [
   'right_rocker_to_back_right_wheel',
 ]
 
+const PROPELLER_JOINTS = [
+  'body_to_prop_fl',
+  'body_to_prop_fr',
+  'body_to_prop_bl',
+  'body_to_prop_br',
+]
+
 export function URDFModel({
   urdfPath,
   position,
@@ -81,6 +89,7 @@ export function URDFModel({
   wireframe,
   floating = false,
   wheelSpeed = 0,
+  propellerSpeed = 0,
   onLoaded,
 }: URDFModelProps) {
   const [robot, setRobot] = useState<THREE.Object3D | null>(null)
@@ -176,6 +185,9 @@ export function URDFModel({
                 roughness: 0.2,
                 depthWrite: false,
                 side: THREE.DoubleSide,
+                polygonOffset: true,
+                polygonOffsetFactor: 1,
+                polygonOffsetUnits: 1,
               })
 
               const threshold = config.overrides?.[resolvedName] ?? config.threshold
@@ -273,6 +285,13 @@ export function URDFModel({
       const wheelRotation = clock.getElapsedTime() * wheelSpeed
       for (const jointName of WHEEL_JOINTS) {
         robotRef.current.joints[jointName]?.setJointValue(wheelRotation)
+      }
+    }
+
+    if (propellerSpeed !== 0 && robotRef.current?.joints) {
+      const propRotation = clock.getElapsedTime() * propellerSpeed
+      for (const jointName of PROPELLER_JOINTS) {
+        robotRef.current.joints[jointName]?.setJointValue(propRotation)
       }
     }
   })

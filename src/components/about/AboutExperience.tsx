@@ -3,12 +3,13 @@ import { useProgress } from '@react-three/drei'
 import { EffectComposer, Vignette } from '@react-three/postprocessing'
 import { useRef, Suspense, useCallback, useState, useMemo } from 'react'
 import * as THREE from 'three'
-import { getAllModels, ALL_SECTIONS } from './SceneConfig'
+import { getAllModels, getAllGLTFModels, ALL_SECTIONS } from './SceneConfig'
 import { useScroll } from '../../hooks/use-scroll'
 import { getScrollState } from './utils'
 import { URDFModel } from './URDFModel'
 import { Terrain } from './Terrain'
 import { Satellite } from './Satellite'
+import { GLTFModel } from './GLTFModel'
 import { Stars, Atmosphere, Stage, BranchPlaceholder } from './Environment'
 import { CameraController } from './Camera'
 import { LoadingOverlay, ProgressIndicator, useIsMobile } from './UI'
@@ -16,6 +17,17 @@ import { LoadingOverlay, ProgressIndicator, useIsMobile } from './UI'
 function Scene({ isMobile, onAllModelsLoaded }: { isMobile: boolean; onAllModelsLoaded: () => void }) {
   const { gl, scene, camera } = useThree()
   const models = useMemo(() => getAllModels(), [])
+  const gltfModels = useMemo(() => {
+    const all = getAllGLTFModels()
+    return all.filter(
+      (section, idx, arr) =>
+        arr.findIndex(
+          (s) =>
+            s.gltfModel!.modelPath === section.gltfModel!.modelPath &&
+            s.gltfModel!.position[1] === section.gltfModel!.position[1]
+        ) === idx
+    )
+  }, [])
   const satellites = useMemo(() => ALL_SECTIONS.filter((s) => s.satellite), [])
   const [loadedCount, setLoadedCount] = useState(0)
   const framesRendered = useRef(0)
@@ -30,7 +42,7 @@ function Scene({ isMobile, onAllModelsLoaded }: { isMobile: boolean; onAllModels
     currentSectionRef.current = fromSection.name
   }, []))
 
-  const allModelsReady = loadedCount === models.length
+  const allModelsReady = loadedCount === models.length + gltfModels.length
 
   const handleModelLoaded = useCallback(() => {
     setLoadedCount((c) => c + 1)
@@ -84,6 +96,7 @@ function Scene({ isMobile, onAllModelsLoaded }: { isMobile: boolean; onAllModels
               wireframe={section.model!.wireframe}
               floating={section.model!.floating}
               wheelSpeed={section.model!.wheelSpeed}
+              propellerSpeed={section.model!.propellerSpeed}
               onLoaded={handleModelLoaded}
             />
             {section.model!.terrain && (
@@ -114,6 +127,19 @@ function Scene({ isMobile, onAllModelsLoaded }: { isMobile: boolean; onAllModels
             </group>
           )
         })}
+
+        {gltfModels.map((section) => (
+          <GLTFModel
+            key={`gltf-${section.name}`}
+            modelPath={section.gltfModel!.modelPath}
+            position={section.gltfModel!.position}
+            rotation={section.gltfModel!.rotation}
+            scale={section.gltfModel!.scale}
+            wireframe={section.gltfModel!.wireframe}
+            floating={section.gltfModel!.floating}
+            onLoaded={handleModelLoaded}
+          />
+        ))}
       </Suspense>
 
       <EffectComposer enableNormalPass={false} multisampling={4}>
