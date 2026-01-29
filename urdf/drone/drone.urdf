@@ -1,0 +1,84 @@
+<?xml version="1.0" ?>
+<robot name="drone">
+  <link name="base_link"/>
+
+  <link name="body_link">
+    <visual>
+      <origin rpy="1.5708 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="../../models/drone_body.glb" scale="0.1 0.1 0.1"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <link name="propeller_front_left">
+    <visual>
+      <origin rpy="1.5708 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="../../models/drone_propeller.glb"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <link name="propeller_front_right">
+    <visual>
+      <origin rpy="1.5708 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="../../models/drone_propeller.glb"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <link name="propeller_back_left">
+    <visual>
+      <origin rpy="1.5708 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="../../models/drone_propeller.glb"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <link name="propeller_back_right">
+    <visual>
+      <origin rpy="1.5708 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="../../models/drone_propeller.glb"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="base_to_body" type="fixed">
+    <parent link="base_link"/>
+    <child link="body_link"/>
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+  </joint>
+
+  <!-- Adjust xyz positions based on your drone model dimensions -->
+  <joint name="body_to_prop_fl" type="continuous">
+    <parent link="body_link"/>
+    <child link="propeller_front_left"/>
+    <origin rpy="0 0 0" xyz="17.8 17.8 6"/>
+    <axis xyz="0 0 1"/>
+  </joint>
+
+  <joint name="body_to_prop_fr" type="continuous">
+    <parent link="body_link"/>
+    <child link="propeller_front_right"/>
+    <origin rpy="0 0 0" xyz="-17.8 17.8 6"/>
+    <axis xyz="0 0 1"/>
+  </joint>
+
+  <joint name="body_to_prop_bl" type="continuous">
+    <parent link="body_link"/>
+    <child link="propeller_back_left"/>
+    <origin rpy="0 0 0" xyz="17.8 -17.8 6"/>
+    <axis xyz="0 0 1"/>
+  </joint>
+
+  <joint name="body_to_prop_br" type="continuous">
+    <parent link="body_link"/>
+    <child link="propeller_back_right"/>
+    <origin rpy="0 0 0" xyz="-17.8 -17.8 6"/>
+    <axis xyz="0 0 1"/>
+  </joint>
+</robot>
