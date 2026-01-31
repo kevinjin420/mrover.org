@@ -63,7 +63,7 @@ export interface Branch {
 }
 
 export const BRANCH_SPACING = 800
-export const DEBUG_AXES = true
+export const DEBUG_AXES = false
 
 const BLUEPRINT_COLOR = '#0a7acc'
 const BLUEPRINT_LINE_OPACITY = 0.7
@@ -360,7 +360,7 @@ const BRANCH_DEFINITIONS: Branch[] = [
         name: 'teleop',
         subteam: {
           name: 'Teleoperation',
-          desc: 'Creates driver-rover interfaces through base station GUIs, control solutions for complex systems, and custom build infrastructure.',
+          desc: 'Builds the base station GUI with mission views, control interfaces for arm and drive systems, 3D visualization, and camera streaming.',
         },
         camera: { x: 180, y: 80, z: 280 },
         lookAt: { x: 0, y: 20, z: 0 },

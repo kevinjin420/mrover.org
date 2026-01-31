@@ -25,6 +25,18 @@ const JOINT_SPEEDS = {
   joint_c: 0.6,
 }
 
+// Limits for animation range (symmetric for smooth back-and-forth)
+const JOINT_LIMITS = {
+  joint_a: { min: -16, max: 16 },
+  joint_b: { min: -0.6, max: 0.6 },
+  joint_c: { min: -0.9, max: 0.9 },
+}
+
+function clampJoint(value: number, joint: keyof typeof JOINT_LIMITS): number {
+  const { min, max } = JOINT_LIMITS[joint]
+  return Math.max(min, Math.min(max, value))
+}
+
 function smoothstep(t: number): number {
   return t * t * (3 - 2 * t)
 }
@@ -106,9 +118,9 @@ export function TeleopDisplay({ visible, position = 'center', onJointValuesChang
 
       displayRef.current.update(axes, buttons)
 
-      jv.joint_a += axis0 * JOINT_SPEEDS.joint_a * delta
-      jv.joint_b += axis1 * JOINT_SPEEDS.joint_b * delta
-      jv.joint_c += axis3 * JOINT_SPEEDS.joint_c * delta
+      jv.joint_a = clampJoint(jv.joint_a + axis0 * JOINT_SPEEDS.joint_a * delta, 'joint_a')
+      jv.joint_b = clampJoint(jv.joint_b + axis1 * JOINT_SPEEDS.joint_b * delta, 'joint_b')
+      jv.joint_c = clampJoint(jv.joint_c + axis3 * JOINT_SPEEDS.joint_c * delta, 'joint_c')
     } else {
       displayRef.current.update([0, 0, 0, 0, -1, -1], new Array(17).fill(0))
 
@@ -164,7 +176,25 @@ export function TeleopDisplay({ visible, position = 'center', onJointValuesChang
   useEffect(() => {
     if (visible) {
       const now = performance.now() / 1000
-      startTimeRef.current = now
+      const jv = jointValuesRef.current
+
+      // Calculate phase offset based on current joint positions to ensure smooth animation
+      // If a joint is near its limit, start at a phase that reverses direction
+      let phaseOffset = 0
+      const aRatio = jv.joint_a / JOINT_LIMITS.joint_a.max
+      const bRatio = jv.joint_b / JOINT_LIMITS.joint_b.max
+      const cRatio = jv.joint_c / JOINT_LIMITS.joint_c.max
+
+      // Start at reversal point if any joint is near its limit
+      if (Math.abs(bRatio) > 0.7) {
+        phaseOffset = bRatio > 0 ? 1.0 : 1.4
+      } else if (Math.abs(aRatio) > 0.7) {
+        phaseOffset = PHASE_DURATION + (aRatio > 0 ? 1.0 : 1.4)
+      } else if (Math.abs(cRatio) > 0.7) {
+        phaseOffset = PHASE_DURATION * 2 + (cRatio > 0 ? 1.0 : 1.4)
+      }
+
+      startTimeRef.current = now - phaseOffset
       lastTimeRef.current = now
       if (!animationRef.current) {
         animationRef.current = requestAnimationFrame(animate)

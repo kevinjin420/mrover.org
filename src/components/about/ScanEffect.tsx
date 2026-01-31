@@ -59,13 +59,13 @@ export function ScanEffect({
     groupRef.current.visible = isVisible || scanProgress.current > 0.01
 
     if (!isVisible) {
-      scanProgress.current = Math.max(0, scanProgress.current - delta * 2)
+      scanProgress.current = Math.max(0, scanProgress.current - delta * 3)
     } else {
-      scanProgress.current = Math.min(1, scanProgress.current + delta * 0.5)
+      scanProgress.current = Math.min(1, scanProgress.current + delta * 1.5)
     }
 
     const progress = scanProgress.current
-    const detected = progress > 0.7
+    const detected = progress > 0.5
     const boxOpacity = detected ? Math.min((progress - 0.7) / 0.3, 1) : 0
 
     if (pointsRef.current) {

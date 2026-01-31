@@ -15,6 +15,7 @@ interface GLTFModelProps {
   highlightColorRef?: RefObject<string | null>
   currentSectionRef?: RefObject<string>
   visibleInSection?: string
+  showAxes?: boolean
   onLoaded?: () => void
 }
 
@@ -28,6 +29,7 @@ export function GLTFModel({
   highlightColorRef,
   currentSectionRef,
   visibleInSection,
+  showAxes,
   onLoaded,
 }: GLTFModelProps) {
   const groupRef = useRef<THREE.Group>(null)
@@ -147,6 +149,7 @@ export function GLTFModel({
     <group ref={groupRef} position={position} rotation={rotation} scale={scale}>
       <group ref={wireframeGroupRef} />
       <group ref={meshGroupRef} />
+      {showAxes && <axesHelper args={[1]} />}
     </group>
   )
 }

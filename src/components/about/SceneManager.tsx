@@ -7,6 +7,13 @@ export function SceneManager() {
   const { getCurrentSection, animateToSection } = useScrollState()
 
   useEffect(() => {
+    const staticLoader = document.getElementById('static-loader')
+    if (staticLoader) {
+      staticLoader.style.display = 'none'
+    }
+  }, [])
+
+  useEffect(() => {
     let resizeObserver: ResizeObserver | null = null
     const header = document.querySelector('header')
     if (header) {

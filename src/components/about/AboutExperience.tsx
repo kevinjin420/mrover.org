@@ -158,6 +158,7 @@ function Scene({ isMobile, onAllModelsLoaded, armAnimationRef, onSectionChange }
 
         {gltfModels.map((section) => {
           const isNalgene = section.gltfModel!.modelPath.includes('nalgene')
+          const isSciencePayload = section.gltfModel!.modelPath.includes('science_payload')
           return (
             <GLTFModel
               key={`gltf-${section.name}`}
@@ -170,6 +171,7 @@ function Scene({ isMobile, onAllModelsLoaded, armAnimationRef, onSectionChange }
               highlightColorRef={isNalgene ? bottleWireframeColorRef : undefined}
               currentSectionRef={isNalgene ? currentSectionRef : undefined}
               visibleInSection={isNalgene ? 'perception' : undefined}
+              showAxes={isSciencePayload}
               onLoaded={handleModelLoaded}
             />
           )

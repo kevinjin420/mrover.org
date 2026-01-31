@@ -5,6 +5,12 @@ import { BRANCHES } from "@/components/about/SceneConfig";
 ---
 
 <BaseLayout title="About - University of Michigan Mars Rover Team" darkPage={true} showFooter={false}>
+  <!-- Static loading overlay shown before React hydrates -->
+  <div id="static-loader" class="fixed inset-0 z-[1000] bg-[#0a0808] flex flex-col items-center justify-center">
+    <div class="w-10 h-10 border-3 border-mrover-accent/30 border-t-mrover-accent rounded-full animate-spin"></div>
+    <div class="mt-5 text-white/60 text-sm">Loading...</div>
+  </div>
+
   <div class="about-content-wrapper relative font-sans" style="clip-path: inset(0);">
     <SceneManager client:only="react" />
 
