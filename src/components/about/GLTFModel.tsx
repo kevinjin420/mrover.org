@@ -64,10 +64,13 @@ export function GLTFModel({
           edges.applyMatrix4(child.matrixWorld)
           wireframeGroup.add(edges)
 
-          const meshMat = new THREE.MeshBasicMaterial({
-            color: wireframe.color,
+          const meshMat = new THREE.MeshStandardMaterial({
+            color: '#000814',
             transparent: true,
             opacity: wireframe.meshOpacity,
+            metalness: 0.8,
+            roughness: 0.2,
+            depthWrite: false,
             side: THREE.DoubleSide,
             polygonOffset: true,
             polygonOffsetFactor: 1,

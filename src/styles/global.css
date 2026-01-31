@@ -1,4 +1,7 @@
 @import "tailwindcss";
+@import "@fontsource-variable/inter";
+@import "@fontsource-variable/jetbrains-mono";
+@import "@/styles/panchang.css";
 
 html {
   font-size: 16px;
@@ -11,89 +14,136 @@ html {
   --color-mrover-base: #003d6b;
   --color-mrover-accent: #FF8C00;
 
-  /* Legacy colors (deprecated) */
-  --color-brand: #2a7ae2;
-  --color-text: #111;
-  --color-background: #fdfdfd;
+  /* Semantic Surface Colors */
+  --color-surface-dark: #0a0808;
 
   --color-grey: #828282;
   --color-grey-light: #d3d3d3;
   --color-grey-dark: #3f3f3f;
 
-  --font-family-lato: Lato, Helvetica, Arial, sans-serif;
-  --font-family-rajdhani: Rajdhani, system-ui, sans-serif;
+  /* Font Families */
+  --font-sans: "Inter Variable", "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono Variable", "JetBrains Mono", ui-monospace, monospace;
+  --font-display: "Panchang", system-ui, sans-serif;
 
+  /* Layout */
   --max-width-content: 1200px;
   --max-width-rovers: 1600px;
 
+  /* Spacing */
   --spacing-unit: 30px;
+  --spacing-section-y: 7rem;
 
+  /* Breakpoints */
   --breakpoint-palm: 910px;
   --breakpoint-rovers-max: 1050px;
   --breakpoint-touchscreen: 500px;
+
+  /* Shadows */
+  --shadow-glow-accent: 0 0 30px -5px rgba(255, 140, 0, 0.15);
+  --shadow-card-hover: 0 20px 40px rgba(0, 0, 0, 0.4);
 }
 
+@layer base {
+  body, h1, h2, h3, h4, h5, h6, p, blockquote, pre, hr, dl, dd, ol, ul, figure {
+    margin: 0;
+    padding: 0;
+  }
 
-body, h1, h2, h3, h4, h5, h6, p, blockquote, pre, hr, dl, dd, ol, ul, figure {
-  margin: 0;
-  padding: 0;
+  figure > img {
+    display: block;
+  }
+
+  ul, ol {
+    margin-left: 30px;
+  }
+
+  li > ul, li > ol {
+    margin-bottom: 0;
+  }
+
+  blockquote {
+    color: #828282;
+    border-left: 4px solid #d3d3d3;
+    padding-left: 15px;
+    font-size: 18px;
+    letter-spacing: -1px;
+    font-style: italic;
+  }
+
+  blockquote > :last-child {
+    margin-bottom: 0;
+  }
+
+  pre, code {
+    font-size: 15px;
+    border: 1px solid #d3d3d3;
+    border-radius: 3px;
+    background-color: #eef;
+    color: #111;
+  }
+
+  code {
+    padding: 1px 5px;
+  }
+
+  pre {
+    padding: 8px 12px;
+    overflow-x: auto;
+  }
+
+  pre > code {
+    border: 0;
+    padding-right: 0;
+    padding-left: 0;
+  }
 }
 
-img {
-  max-width: 100%;
-  vertical-align: middle;
+/* Dark page styles for pages with dark backgrounds */
+.dark-page {
+  background: var(--color-surface-dark);
+  color: white;
 }
 
-figure > img {
-  display: block;
-}
-
-ul, ol {
-  margin-left: 30px;
-}
-
-li > ul, li > ol {
-  margin-bottom: 0;
-}
-
-blockquote {
-  color: #828282;
-  border-left: 4px solid #d3d3d3;
-  padding-left: 15px;
-  font-size: 18px;
-  letter-spacing: -1px;
-  font-style: italic;
-}
-
-blockquote > :last-child {
-  margin-bottom: 0;
-}
-
-pre, code {
-  font-size: 15px;
-  border: 1px solid #d3d3d3;
-  border-radius: 3px;
-  background-color: #eef;
-  color: #111;
-}
-
-code {
-  padding: 1px 5px;
-}
-
-pre {
-  padding: 8px 12px;
-  overflow-x: auto;
-}
-
-pre > code {
-  border: 0;
-  padding-right: 0;
-  padding-left: 0;
+.dark-page header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  backdrop-filter: none;
 }
 
 .center {
   display: block;
   margin-left: auto;
   margin-right: auto;
+}
+
+/* Shared Animations */
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+@keyframes fade {
+  from { opacity: 0.4; }
+  to { opacity: 1; }
+}
+
+@keyframes char-reveal {
+  0% {
+    opacity: 0;
+    transform: translateY(100%) rotateX(-90deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) rotateX(0deg);
+  }
+}
+
+.animate-fade {
+  animation: fade 0.5s;
 }

@@ -11,6 +11,7 @@ interface Props {
   image?: string;
   canonical?: string;
   showFooter?: boolean;
+  darkPage?: boolean;
 }
 
 const {
@@ -18,7 +19,8 @@ const {
   description = 'The Michigan Mars Rover Team (MRover) competes in the annual University Rover Challenge. In 2018, we placed 9th in the world and 3rd in the US. Our mission is to inspire students to pursue space exploration and engineering.',
   image = 'https://mrover.org/logos/logo_short.svg',
   canonical,
-  showFooter = true
+  showFooter = true,
+  darkPage = false
 } = Astro.props;
 
 const siteUrl = 'https://mrover.org';
@@ -64,8 +66,6 @@ const canonicalURL = canonical || new URL(Astro.url.pathname, siteUrl).toString(
         { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/icons/favicon-32x32.png' },
         { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/icons/favicon-16x16.png' },
         { rel: 'manifest', href: '/manifest.json' },
-        { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
-        { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
       ],
       meta: [
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -73,11 +73,6 @@ const canonicalURL = canonical || new URL(Astro.url.pathname, siteUrl).toString(
       ],
     }}
   />
-
-  <!-- Async Google Fonts loading to avoid render blocking -->
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Inter:wght@200;300;400;500;600;700;800&family=Rajdhani:wght@300;400;500;600;700&display=swap" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Inter:wght@200;300;400;500;600;700;800&family=Rajdhani:wght@300;400;500;600;700&display=swap" media="print" onload="this.media='all'" />
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Inter:wght@200;300;400;500;600;700;800&family=Rajdhani:wght@300;400;500;600;700&display=swap" /></noscript>
 
   <script is:inline type="application/ld+json" set:html={JSON.stringify({
     "@context": "https://schema.org",
@@ -167,7 +162,7 @@ const canonicalURL = canonical || new URL(Astro.url.pathname, siteUrl).toString(
   </script>
 </head>
 
-<body class="font-lato text-base leading-normal text-michigan-blue antialiased">
+<body class={`font-sans text-base leading-normal antialiased ${darkPage ? 'dark-page' : 'text-michigan-blue'}`}>
   <Header />
 
   <slot />

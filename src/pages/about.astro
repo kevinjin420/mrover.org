@@ -4,8 +4,8 @@ import { SceneManager } from "@/components/about/SceneManager";
 import { BRANCHES } from "@/components/about/SceneConfig";
 ---
 
-<BaseLayout title="About - University of Michigan Mars Rover Team">
-  <div class="about-content-wrapper relative font-rajdhani" style="clip-path: inset(0);">
+<BaseLayout title="About - University of Michigan Mars Rover Team" darkPage={true} showFooter={false}>
+  <div class="about-content-wrapper relative font-sans" style="clip-path: inset(0);">
     <SceneManager client:only="react" />
 
     <main class="relative z-1 text-white">
@@ -19,7 +19,7 @@ import { BRANCHES } from "@/components/about/SceneConfig";
             <div class="branch-slides flex flex-1 items-stretch">
               {branch.sections.map((section) => (
                 <section
-                  class={`min-w-full w-full h-dvh flex flex-col p-0 px-16 pb-16 box-border pointer-events-none shrink-0 ${section.name === 'mission-intro' ? 'justify-center items-center' : 'justify-end items-end'}`}
+                  class={`min-w-full w-full h-dvh flex flex-col p-0 px-4 pb-8 md:px-16 md:pb-16 box-border pointer-events-none shrink-0 ${section.name === 'mission-intro' ? 'justify-center items-center' : 'justify-end items-start md:items-end'}`}
                   data-id={section.name}
                 >
                   {section.name === 'mission-intro' ? (
@@ -37,14 +37,14 @@ import { BRANCHES } from "@/components/about/SceneConfig";
                       </h1>
                     </div>
                   ) : section.name === 'mission' ? (
-                    <div class="card w-[500px] min-h-[180px] p-6 bg-[#0e0e0e]/50 backdrop-blur-md text-white pointer-events-auto flex flex-col" style={`border: 1px solid var(--branch-accent, rgba(255,255,255,0.3));`}>
-                      <h2 class="text-3xl font-semibold uppercase leading-tight mb-4 break-keep" style={`font-family: 'Panchang', sans-serif; color: var(--branch-accent, #FF8C00);`}>Our Mission</h2>
-                      <p class="text-xl leading-relaxed text-white/90 m-0">{section.description}</p>
+                    <div class="card w-[calc(100vw-2rem)] md:w-[500px] min-h-[180px] p-6 bg-[#0e0e0e]/50 backdrop-blur-md text-white pointer-events-auto flex flex-col" style={`border: 1px solid var(--branch-accent, rgba(255,255,255,0.3));`}>
+                      <h2 class="text-xl md:text-3xl font-semibold uppercase leading-tight mb-4 break-keep" style={`font-family: 'Panchang', sans-serif; color: var(--branch-accent, #FF8C00);`}>Our Mission</h2>
+                      <p class="text-base md:text-xl leading-relaxed text-white/90 m-0">{section.description}</p>
                     </div>
                   ) : (
-                    <div class="card w-[500px] min-h-[180px] p-6 bg-[#0e0e0e]/50 backdrop-blur-md text-white pointer-events-auto flex flex-col" style={`border: 1px solid var(--branch-accent, rgba(255,255,255,0.3));`}>
-                      <h2 class="text-3xl font-semibold uppercase leading-tight mb-4 break-keep" style={`font-family: 'Panchang', sans-serif; color: var(--branch-accent, #FF8C00);`}>{section.subteam?.name}</h2>
-                      <p class="text-xl leading-relaxed text-white/90 m-0">{section.subteam?.desc}</p>
+                    <div class="card w-[calc(100vw-2rem)] md:w-[500px] min-h-[180px] p-6 bg-[#0e0e0e]/50 backdrop-blur-md text-white pointer-events-auto flex flex-col" style={`border: 1px solid var(--branch-accent, rgba(255,255,255,0.3));`}>
+                      <h2 class="text-xl md:text-3xl font-semibold uppercase leading-tight mb-4 break-keep" style={`font-family: 'Panchang', sans-serif; color: var(--branch-accent, #FF8C00);`}>{section.subteam?.name}</h2>
+                      <p class="text-base md:text-xl leading-relaxed text-white/90 m-0">{section.subteam?.desc}</p>
                     </div>
                   )}
                 </section>
@@ -106,23 +106,6 @@ import { BRANCHES } from "@/components/about/SceneConfig";
 </BaseLayout>
 
 <style>
-  @import '@/styles/panchang.css';
-
-  :global(footer) {
-    display: none;
-  }
-
-  :global(header) {
-    position: fixed !important;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
-    backdrop-filter: none !important;
-  }
-
   :global(html),
   :global(body) {
     overscroll-behavior: none;
@@ -138,36 +121,5 @@ import { BRANCHES } from "@/components/about/SceneConfig";
     transform: translateY(100%) rotateX(-90deg);
     animation: char-reveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     animation-delay: calc(0.4s + var(--word-index) * 0.3s + var(--char-index) * 0.05s);
-  }
-
-  @keyframes char-reveal {
-    0% {
-      opacity: 0;
-      transform: translateY(100%) rotateX(-90deg);
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(0) rotateX(0deg);
-    }
-  }
-
-  @media (max-width: 800px) {
-    section {
-      padding: 0 1.5rem 2rem 1.5rem !important;
-      align-items: flex-start !important;
-    }
-
-    .card {
-      width: calc(100vw - 3rem) !important;
-      max-width: none;
-    }
-
-    .card h2 {
-      font-size: 1.4rem !important;
-    }
-
-    .card p {
-      font-size: 1.1rem !important;
-    }
   }
 </style>

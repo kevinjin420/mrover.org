@@ -8,10 +8,10 @@ const featuredRovers = reversedRovers.slice(0, 3);
 const gridRovers = reversedRovers.slice(3);
 ---
 
-<BaseLayout title="Rovers - University of Michigan Mars Rover Team">
+<BaseLayout title="Rovers - University of Michigan Mars Rover Team" darkPage={true}>
   <RoversScene client:only="react" />
 
-  <div class="relative z-10 pt-24 min-h-screen w-full overflow-x-hidden font-rajdhani">
+  <div class="relative z-10 pt-24 min-h-screen w-full overflow-x-hidden font-sans">
     <!-- Header -->
     <header class="text-center px-4 pb-16">
       <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold uppercase text-white mb-4" style="font-family: 'Panchang', sans-serif; text-shadow: 0 0 30px rgba(255, 140, 0, 0.3);">
@@ -28,14 +28,19 @@ const gridRovers = reversedRovers.slice(3);
         <a
           href="#content"
           id={rover.year}
-          class={`featured-card group flex bg-[#0e0e0e]/60 border border-white/10 rounded-lg overflow-hidden no-underline backdrop-blur-sm h-[400px] cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:border-mrover-accent hover:shadow-[0_20px_40px_rgba(0,0,0,0.4)] ${index % 2 === 1 ? 'flex-row-reverse' : ''}`}
+          data-year={rover.year}
+          data-name={rover.name}
+          data-image={rover.image_path}
+          data-desc={JSON.stringify(rover.desc)}
+          data-slides={JSON.stringify(rover.slideshow)}
+          class={`featured-card group flex flex-col h-auto lg:flex-row lg:h-[400px] bg-[#0e0e0e]/60 border border-white/10 rounded-lg overflow-hidden no-underline backdrop-blur-sm cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:border-mrover-accent hover:shadow-[0_20px_40px_rgba(0,0,0,0.4)] ${index % 2 === 1 ? 'lg:flex-row-reverse' : ''}`}
         >
-          <div class="flex-[1.2] overflow-hidden relative">
+          <div class="h-[250px] lg:h-auto lg:flex-[1.2] overflow-hidden relative">
             <div class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-105" style={`background-image: url('/${rover.image_path}');`}></div>
           </div>
 
-          <div class={`flex-[0.8] p-12 flex flex-col justify-center ${index % 2 === 1 ? 'border-r border-white/5' : 'border-l border-white/5'}`}>
-            <h3 class="text-5xl font-bold text-white leading-none m-0" style="font-family: 'Panchang', sans-serif;">{rover.year}</h3>
+          <div class={`p-8 lg:p-12 lg:flex-[0.8] flex flex-col justify-center ${index % 2 === 1 ? 'lg:border-r lg:border-white/5' : 'lg:border-l lg:border-white/5'}`}>
+            <h3 class="text-3xl lg:text-5xl font-bold text-white leading-none m-0" style="font-family: 'Panchang', sans-serif;">{rover.year}</h3>
             <p class="text-2xl text-mrover-accent uppercase tracking-[0.15em] font-semibold mt-2 mb-6">{rover.name}</p>
             <div class="text-lg leading-relaxed text-white/70 mb-6">
               <p class="m-0">{rover.desc[0].substring(0, 150)}...</p>
@@ -44,17 +49,6 @@ const gridRovers = reversedRovers.slice(3);
               Read More &rarr;
             </span>
           </div>
-
-          <!-- Hidden data for JS -->
-          <span class="hidden year">{rover.year}</span>
-          <span class="hidden name">{rover.name}</span>
-          <span class="hidden imageURL">{rover.image_path}</span>
-          {rover.desc.map(para => (
-            <span class="hidden desc">{para}</span>
-          ))}
-          {rover.slideshow.map(slide => (
-            <span class="hidden slide">{slide}</span>
-          ))}
         </a>
       ))}
     </section>
@@ -66,20 +60,14 @@ const gridRovers = reversedRovers.slice(3);
           <a
             href="#content"
             id={rover.year}
+            data-year={rover.year}
+            data-name={rover.name}
+            data-image={rover.image_path}
+            data-desc={JSON.stringify(rover.desc)}
+            data-slides={JSON.stringify(rover.slideshow)}
             class="rover-card group block relative aspect-4/3 rounded overflow-hidden border border-white/10 bg-[#0e0e0e]/40 backdrop-blur-sm no-underline cursor-pointer transition-all duration-300 hover:-translate-y-2 hover:border-mrover-accent hover:shadow-[0_20px_40px_rgba(0,0,0,0.4),0_0_20px_rgba(255,140,0,0.2)]"
           >
             <div class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-105" style={`background-image: url('/${rover.image_path}');`}></div>
-
-            <!-- Hidden data for JS -->
-            <span class="hidden year">{rover.year}</span>
-            <span class="hidden name">{rover.name}</span>
-            <span class="hidden imageURL">{rover.image_path}</span>
-            {rover.desc.map(para => (
-              <span class="hidden desc">{para}</span>
-            ))}
-            {rover.slideshow.map(slide => (
-              <span class="hidden slide">{slide}</span>
-            ))}
 
             <div class="absolute inset-0 bg-linear-to-t from-black/95 via-black/50 to-transparent flex flex-col justify-end p-6 transition-all duration-300 group-hover:from-black/95 group-hover:via-black/60 group-hover:to-black/20">
               <h3 class="text-4xl font-semibold text-white m-0 leading-none" style="font-family: 'Panchang', sans-serif;">{rover.year}</h3>
@@ -168,31 +156,31 @@ const gridRovers = reversedRovers.slice(3);
         tile.addEventListener('click', function(event) {
           event.preventDefault();
 
-          const year = this.querySelector('.year').textContent;
-          const name = this.querySelector('.name').textContent;
-          const descElements = this.querySelectorAll('.desc');
-          const slideElements = this.querySelectorAll('.slide');
+          const year = this.dataset.year;
+          const name = this.dataset.name;
+          const descArray = JSON.parse(this.dataset.desc || '[]');
+          const slidesArray = JSON.parse(this.dataset.slides || '[]');
 
           const contentTitle = document.getElementById('content-title');
           contentTitle.innerHTML = `<h2 class="text-3xl md:text-4xl lg:text-5xl font-semibold text-white mb-8 leading-tight" style="font-family: 'Panchang', sans-serif;">${year} <span class="text-mrover-accent mx-2">//</span> ${name}</h2>`;
 
           const contentText = document.getElementById('content-text');
           contentText.innerHTML = '';
-          descElements.forEach(desc => {
-            contentText.insertAdjacentHTML('beforeend', `<p class="text-lg leading-relaxed text-white/85 mb-6 font-light">${desc.textContent}</p>`);
+          descArray.forEach(desc => {
+            contentText.insertAdjacentHTML('beforeend', `<p class="text-lg leading-relaxed text-white/85 mb-6 font-light">${desc}</p>`);
           });
 
           const contentSlideshow = document.getElementById('content-slideshow');
           contentSlideshow.innerHTML = '';
 
-          if (slideElements.length > 0) {
-            slideElements.forEach(slide => {
+          if (slidesArray.length > 0) {
+            slidesArray.forEach(slide => {
               contentSlideshow.insertAdjacentHTML('beforeend',
-                `<img class="slide w-full animate-fade" src="/${slide.textContent}">`
+                `<img class="slide w-full animate-fade" src="/${slide}">`
               );
             });
 
-            if (slideElements.length > 1) {
+            if (slidesArray.length > 1) {
               contentSlideshow.insertAdjacentHTML('beforeend', '<a class="prev absolute top-1/2 left-0 -mt-5 p-4 text-white font-bold text-2xl bg-black/50 cursor-pointer select-none z-10 rounded-r transition-colors hover:bg-mrover-accent" onclick="plusSlides(-1)">&#10094;</a>');
               contentSlideshow.insertAdjacentHTML('beforeend', '<a class="next absolute top-1/2 right-0 -mt-5 p-4 text-white font-bold text-2xl bg-black/50 cursor-pointer select-none z-10 rounded-l transition-colors hover:bg-mrover-accent" onclick="plusSlides(1)">&#10095;</a>');
             }
@@ -208,13 +196,6 @@ const gridRovers = reversedRovers.slice(3);
   </script>
 
   <style>
-    @import '@/styles/panchang.css';
-
-    :global(body) {
-      background: #0a0808 !important;
-      color: white;
-    }
-
     .modal-overlay.visible .modal-backdrop {
       opacity: 1;
     }
@@ -226,37 +207,6 @@ const gridRovers = reversedRovers.slice(3);
 
     .slide {
       display: none;
-    }
-
-    @keyframes fade {
-      from { opacity: 0.4; }
-      to { opacity: 1; }
-    }
-
-    .animate-fade {
-      animation: fade 0.5s;
-    }
-
-    @media (max-width: 900px) {
-      .featured-card {
-        flex-direction: column !important;
-        height: auto !important;
-      }
-
-      .featured-card > div:first-child {
-        height: 250px;
-        flex: none !important;
-      }
-
-      .featured-card > div:last-of-type {
-        padding: 2rem !important;
-        flex: none !important;
-        border: none !important;
-      }
-
-      .featured-card h3 {
-        font-size: 2.5rem !important;
-      }
     }
   </style>
 </BaseLayout>

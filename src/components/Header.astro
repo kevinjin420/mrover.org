@@ -20,7 +20,7 @@ const navPages: Page[] = [
 const visiblePages = navPages.filter((page) => !page.hideInHeader).sort((a, b) => a.weight - b.weight);
 ---
 
-<header class="sticky top-0 z-40 bg-black border-b border-orange-500 shadow-lg shadow-orange-500/30 backdrop-blur-sm">
+<header class="sticky top-0 z-40 bg-black border-b border-mrover-accent shadow-lg shadow-mrover-accent/30 backdrop-blur-sm">
   <div class="max-w-content mx-auto px-6 lg:px-8">
     <div class="flex items-center justify-between h-16">
       <!-- Logo -->
@@ -29,14 +29,14 @@ const visiblePages = navPages.filter((page) => !page.hideInHeader).sort((a, b) =
       </a>
 
       <!-- Desktop Navigation -->
-      <nav class="hidden md:flex items-center space-x-6">
+      <nav class="hidden md:flex items-center space-x-6 font-mono">
         {
           visiblePages.map((page) => (
             <a
               href={page.url}
               class="text-sm font-semibold uppercase text-mrover-accent transition-colors"
             >
-              {page.title}
+              {page.title.replace(/ /g, '_')}
             </a>
           ))
         }
@@ -54,7 +54,7 @@ const visiblePages = navPages.filter((page) => !page.hideInHeader).sort((a, b) =
           <!-- Mobile Dropdown -->
           <div
             id="mobile-menu"
-            class="hidden absolute right-0 top-full mt-2 w-48 bg-michigan-blue/95 backdrop-blur-sm border border-mrover-base/30 rounded-lg shadow-xl overflow-hidden opacity-0 scale-95 transition-all duration-200 origin-top-right"
+            class="hidden absolute right-0 top-full mt-2 w-48 bg-michigan-blue/95 backdrop-blur-sm border border-mrover-base/30 rounded-lg shadow-xl overflow-hidden opacity-0 scale-95 transition-all duration-200 origin-top-right font-mono"
           >
             {
               visiblePages.map((page) => (
@@ -62,7 +62,7 @@ const visiblePages = navPages.filter((page) => !page.hideInHeader).sort((a, b) =
                   href={page.url}
                   class="block px-4 py-3 text-sm font-semibold uppercase text-mrover-accent hover:bg-mrover-base/20 transition-colors"
                 >
-                  {page.title}
+                  {page.title.replace(/ /g, '_')}
                 </a>
               ))
             }

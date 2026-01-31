@@ -62,7 +62,7 @@ const sponsorshipLevels = [
         <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold uppercase mb-4 [text-shadow:0_0_40px_rgba(255,140,0,0.3)]">
           Partner With Us
         </h1>
-        <p class="text-base sm:text-lg md:text-xl text-white/70 tracking-widest !mb-10">
+        <p class="text-base sm:text-lg md:text-xl text-white/70 tracking-widest mb-10">
           Help us push the boundaries of exploration
         </p>
         <a
@@ -77,7 +77,7 @@ const sponsorshipLevels = [
     <!-- Why Sponsor -->
     <section class="py-28 bg-[#0a0808]">
       <div class="max-w-[1200px] mx-auto px-8">
-        <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold uppercase text-center tracking-wide !mb-16">
+        <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold uppercase text-center tracking-wide mb-16">
           Why Sponsor MRover?
         </h2>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
@@ -117,7 +117,7 @@ const sponsorshipLevels = [
     <!-- Sponsorship Levels -->
     <section class="py-28 bg-gradient-to-b from-[#0a0808] to-[#111]">
       <div class="max-w-[1200px] mx-auto px-8">
-        <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold uppercase text-center tracking-wide !mb-16">
+        <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold uppercase text-center tracking-wide mb-16">
           Sponsorship Tiers
         </h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -127,7 +127,7 @@ const sponsorshipLevels = [
                 <span class={`text-xl font-bold uppercase tracking-wide ${level.nameColor}`}>{level.name}</span>
                 <span class="text-lg font-semibold text-white/70">{level.amount}</span>
               </div>
-              <ul class="!p-3 space-y-4">
+              <ul class="p-6 space-y-4">
                 {level.benefits.map((benefit) => (
                   <li class="flex items-start gap-3 text-white/80 leading-relaxed">
                     <span class="w-1.5 h-1.5 rounded-full bg-mrover-accent mt-2 shrink-0"></span>
