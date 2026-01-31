@@ -15,6 +15,7 @@ export interface ArmJointValues {
 
 interface TeleopDisplayProps {
   visible: boolean
+  animationActive?: boolean
   position?: 'center' | 'left'
   onJointValuesChange?: (values: ArmJointValues) => void
 }
@@ -77,7 +78,7 @@ function getAxisTarget(time: number): { axis0: number; axis1: number; axis3: num
 
 const RETURN_SPEED = 2.0
 
-export function TeleopDisplay({ visible, position = 'center', onJointValuesChange }: TeleopDisplayProps) {
+export function TeleopDisplay({ visible, animationActive, position = 'center', onJointValuesChange }: TeleopDisplayProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const displayRef = useRef<GamepadDisplay | null>(null)
   const animationRef = useRef<number>(0)
@@ -91,15 +92,17 @@ export function TeleopDisplay({ visible, position = 'center', onJointValuesChang
     joint_de_roll: 0,
     gripper: 0,
   })
-  const visibleRef = useRef(visible)
+  const activeRef = useRef(animationActive ?? visible)
   const returningRef = useRef(false)
 
+  const isActive = animationActive ?? visible
+
   useEffect(() => {
-    visibleRef.current = visible
-    if (!visible && !returningRef.current) {
+    activeRef.current = isActive
+    if (!isActive && !returningRef.current) {
       returningRef.current = true
     }
-  }, [visible])
+  }, [isActive])
 
   const animate = useCallback(() => {
     if (!displayRef.current) return
@@ -111,18 +114,22 @@ export function TeleopDisplay({ visible, position = 'center', onJointValuesChang
 
     const jv = jointValuesRef.current
 
-    if (visibleRef.current) {
+    if (activeRef.current) {
       const { axis0, axis1, axis3 } = getAxisTarget(elapsed)
       const axes = [axis0, axis1, 0, axis3, -1, -1]
       const buttons = new Array(17).fill(0)
 
-      displayRef.current.update(axes, buttons)
+      if (displayRef.current) {
+        displayRef.current.update(axes, buttons)
+      }
 
       jv.joint_a = clampJoint(jv.joint_a + axis0 * JOINT_SPEEDS.joint_a * delta, 'joint_a')
       jv.joint_b = clampJoint(jv.joint_b + axis1 * JOINT_SPEEDS.joint_b * delta, 'joint_b')
       jv.joint_c = clampJoint(jv.joint_c + axis3 * JOINT_SPEEDS.joint_c * delta, 'joint_c')
     } else {
-      displayRef.current.update([0, 0, 0, 0, -1, -1], new Array(17).fill(0))
+      if (displayRef.current) {
+        displayRef.current.update([0, 0, 0, 0, -1, -1], new Array(17).fill(0))
+      }
 
       const lerpFactor = 1 - Math.exp(-RETURN_SPEED * delta)
       jv.joint_a *= 1 - lerpFactor
@@ -174,7 +181,7 @@ export function TeleopDisplay({ visible, position = 'center', onJointValuesChang
   }, [])
 
   useEffect(() => {
-    if (visible) {
+    if (isActive) {
       const now = performance.now() / 1000
       const jv = jointValuesRef.current
 
@@ -205,12 +212,12 @@ export function TeleopDisplay({ visible, position = 'center', onJointValuesChang
     }
 
     return () => {
-      if (animationRef.current && !visibleRef.current && !returningRef.current) {
+      if (animationRef.current && !activeRef.current && !returningRef.current) {
         cancelAnimationFrame(animationRef.current)
         animationRef.current = 0
       }
     }
-  }, [visible, animate])
+  }, [isActive, animate])
 
   return (
     <div

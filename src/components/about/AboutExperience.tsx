@@ -210,8 +210,9 @@ export function AboutExperience() {
     }
   }
 
-  const teleopVisible = modelsLoaded && (currentSection === 'teleop' || currentSection === 'esw-controls')
-  const eswVisible = modelsLoaded && currentSection === 'esw-controls'
+  const teleopSectionActive = modelsLoaded && (currentSection === 'teleop' || currentSection === 'esw-controls')
+  const teleopVisible = !isMobile && teleopSectionActive
+  const eswVisible = !isMobile && modelsLoaded && currentSection === 'esw-controls'
 
   return (
     <>
@@ -219,6 +220,7 @@ export function AboutExperience() {
       <ProgressIndicator visible={modelsLoaded} isMobile={isMobile} />
       <TeleopDisplay
         visible={teleopVisible}
+        animationActive={teleopSectionActive}
         position={eswVisible ? 'left' : 'center'}
         onJointValuesChange={handleJointValuesChange}
       />
@@ -241,7 +243,7 @@ export function AboutExperience() {
             toneMappingExposure: 1.5,
             powerPreference: 'high-performance',
           }}
-          camera={{ fov: 50, near: 0.1, far: 10000, position: [0, 100, 400] }}
+          camera={{ fov: isMobile ? 65 : 50, near: 0.1, far: 10000, position: [0, 100, 400] }}
           shadows={!isMobile}
           dpr={Math.min(window.devicePixelRatio, isMobile ? 2 : 1.5)}
         >

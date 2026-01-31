@@ -1,5 +1,5 @@
 @import "tailwindcss";
-@import "@fontsource-variable/inter";
+@import "@fontsource-variable/space-grotesk";
 @import "@fontsource-variable/jetbrains-mono";
 @import "./panchang.css";
 
@@ -22,7 +22,7 @@ html {
   --color-grey-dark: #3f3f3f;
 
   /* Font Families */
-  --font-sans: "Inter Variable", "Inter", system-ui, sans-serif;
+  --font-sans: "Space Grotesk Variable", "Space Grotesk", system-ui, sans-serif;
   --font-mono: "JetBrains Mono Variable", "JetBrains Mono", ui-monospace, monospace;
   --font-display: "Panchang", system-ui, sans-serif;
 
