@@ -10,7 +10,6 @@ export interface TerrainConfig {
   radius: number
   gridSize: number
   scrollSpeed: number
-  roughness: number
 }
 
 export interface SatelliteConfig {
@@ -38,6 +37,7 @@ export interface ModelConfig {
   terrain?: TerrainConfig
   wheelSpeed?: number
   propellerSpeed?: number
+  armAnimation?: boolean
 }
 
 export interface SectionTarget {
@@ -281,13 +281,13 @@ const BRANCH_DEFINITIONS: Branch[] = [
     accent: '#BBDEFB',
     sections: [
       {
-        name: 'navigation',
+        name: 'perception',
         subteam: {
-          name: 'Navigation',
-          desc: 'Uses A* pathfinding to plan obstacle-avoiding routes as part of the Autonomy team.',
+          name: 'Perception',
+          desc: 'Identifies environmental features and objects as part of the Autonomy team using camera and sensor data.',
         },
-        camera: { x: -300, y: 80, z: 280 },
-        lookAt: { x: 0, y: 20, z: 0 },
+        camera: { x: -200, y: 60, z: 200 },
+        lookAt: { x: 50, y: 0, z: 0 },
         model: {
           urdfPath: '/urdf/rover/rover.urdf',
           position: [0, -35, 0],
@@ -297,18 +297,30 @@ const BRANCH_DEFINITIONS: Branch[] = [
             radius: 400,
             gridSize: 20,
             scrollSpeed: -60,
-            roughness: 4,
           },
           wheelSpeed: 3,
+          armAnimation: true,
+        },
+        gltfModel: {
+          modelPath: '/models/nalgene.glb',
+          position: [0, -30, 100],
+          rotation: [0, -Math.PI/2, 0],
+          scale: 110,
+          wireframe: {
+            threshold: 5,
+            color: BLUEPRINT_COLOR,
+            lineOpacity: BLUEPRINT_LINE_OPACITY,
+            meshOpacity: BLUEPRINT_MESH_OPACITY,
+          },
         },
       },
       {
-        name: 'perception',
+        name: 'navigation',
         subteam: {
-          name: 'Perception',
-          desc: 'Identifies environmental features and objects as part of the Autonomy team using camera and sensor data.',
+          name: 'Navigation',
+          desc: 'Uses A* pathfinding to plan obstacle-avoiding routes as part of the Autonomy team.',
         },
-        camera: { x: -180, y: 80, z: 280 },
+        camera: { x: -300, y: 80, z: 280 },
         lookAt: { x: 0, y: 20, z: 0 },
       },
       {
@@ -345,19 +357,19 @@ const BRANCH_DEFINITIONS: Branch[] = [
         },
       },
       {
-        name: 'esw-controls',
+        name: 'teleop',
         subteam: {
-          name: 'Embedded Software',
-          desc: 'Writes low-level driver code abstracting manufacturer libraries in C and Python for other programming teams.',
+          name: 'Teleoperation',
+          desc: 'Creates driver-rover interfaces through base station GUIs, control solutions for complex systems, and custom build infrastructure.',
         },
         camera: { x: 180, y: 80, z: 280 },
         lookAt: { x: 0, y: 20, z: 0 },
       },
       {
-        name: 'teleop',
+        name: 'esw-controls',
         subteam: {
-          name: 'Teleoperation',
-          desc: 'Creates driver-rover interfaces through base station GUIs, control solutions for complex systems, and custom build infrastructure.',
+          name: 'Embedded Software',
+          desc: 'Writes low-level driver code abstracting manufacturer libraries in C and Python for other programming teams.',
         },
         camera: { x: 300, y: 80, z: 280 },
         lookAt: { x: 0, y: 20, z: 0 },

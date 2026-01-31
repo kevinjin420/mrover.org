@@ -1,10 +1,11 @@
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef, type RefObject } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
 import URDFLoader from 'urdf-loader'
 import { DEBUG_AXES, type WireframeConfig } from './SceneConfig'
+import type { ArmJointValues } from './TeleopDisplay'
 
 function processInChunks<T>(
   items: T[],
@@ -54,7 +55,9 @@ interface URDFModelProps {
   wireframe?: WireframeConfig
   floating?: boolean
   wheelSpeed?: number
+  currentSectionRef?: RefObject<string>
   propellerSpeed?: number
+  armAnimationRef?: RefObject<ArmJointValues>
   onLoaded?: () => void
 }
 
@@ -82,6 +85,15 @@ const PROPELLER_JOINTS = [
   'body_to_prop_br',
 ]
 
+const ARM_JOINT_MAP: Record<keyof ArmJointValues, { joint: string; base: number }> = {
+  joint_a: { joint: 'chassis_to_arm_a', base: 24.14 },
+  joint_b: { joint: 'arm_a_to_arm_b', base: -0.785 },
+  joint_c: { joint: 'arm_b_to_arm_c', base: 1.91 },
+  joint_de_pitch: { joint: 'arm_c_to_arm_d', base: -1 },
+  joint_de_roll: { joint: 'arm_d_to_arm_e', base: -1.57 },
+  gripper: { joint: 'gripper_link', base: 0 },
+}
+
 export function URDFModel({
   urdfPath,
   position,
@@ -89,12 +101,16 @@ export function URDFModel({
   wireframe,
   floating = false,
   wheelSpeed = 0,
+  currentSectionRef,
   propellerSpeed = 0,
+  armAnimationRef,
   onLoaded,
 }: URDFModelProps) {
   const [robot, setRobot] = useState<THREE.Object3D | null>(null)
   const robotRef = useRef<RobotWithJoints | null>(null)
   const groupRef = useRef<THREE.Group>(null)
+  const currentWheelSpeed = useRef(0)
+  const wheelRotation = useRef(0)
 
   useEffect(() => {
     const manager = new THREE.LoadingManager()
@@ -282,9 +298,13 @@ export function URDFModel({
     }
 
     if (wheelSpeed !== 0 && robotRef.current?.joints) {
-      const wheelRotation = clock.getElapsedTime() * wheelSpeed
+      const isStatic = currentSectionRef?.current === 'perception'
+      const targetSpeed = isStatic ? 0 : wheelSpeed
+      const lerpFactor = 1 - Math.exp(-3 * delta)
+      currentWheelSpeed.current += (targetSpeed - currentWheelSpeed.current) * lerpFactor
+      wheelRotation.current += delta * currentWheelSpeed.current
       for (const jointName of WHEEL_JOINTS) {
-        robotRef.current.joints[jointName]?.setJointValue(wheelRotation)
+        robotRef.current.joints[jointName]?.setJointValue(wheelRotation.current)
       }
     }
 
@@ -292,6 +312,14 @@ export function URDFModel({
       const propRotation = clock.getElapsedTime() * propellerSpeed
       for (const jointName of PROPELLER_JOINTS) {
         robotRef.current.joints[jointName]?.setJointValue(propRotation)
+      }
+    }
+
+    if (armAnimationRef?.current && robotRef.current?.joints) {
+      const values = armAnimationRef.current
+      for (const [key, { joint, base }] of Object.entries(ARM_JOINT_MAP)) {
+        const offset = values[key as keyof ArmJointValues] ?? 0
+        robotRef.current.joints[joint]?.setJointValue(base + offset)
       }
     }
   })

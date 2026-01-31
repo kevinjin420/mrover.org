@@ -1,7 +1,7 @@
 import { Canvas, useThree, useFrame } from '@react-three/fiber'
 import { useProgress } from '@react-three/drei'
 import { EffectComposer, Vignette } from '@react-three/postprocessing'
-import { useRef, Suspense, useCallback, useState, useMemo } from 'react'
+import { useRef, Suspense, useCallback, useState, useMemo, type RefObject } from 'react'
 import * as THREE from 'three'
 import { getAllModels, getAllGLTFModels, ALL_SECTIONS } from './SceneConfig'
 import { useScroll } from '../../hooks/use-scroll'
@@ -13,8 +13,18 @@ import { GLTFModel } from './GLTFModel'
 import { Stars, Atmosphere, Stage, BranchPlaceholder } from './Environment'
 import { CameraController } from './Camera'
 import { LoadingOverlay, ProgressIndicator, useIsMobile } from './UI'
+import { TeleopDisplay, useTeleopAnimation, type ArmJointValues } from './TeleopDisplay'
+import { ESWDisplay } from './ESWDisplay'
+import { ScanEffect } from './ScanEffect'
 
-function Scene({ isMobile, onAllModelsLoaded }: { isMobile: boolean; onAllModelsLoaded: () => void }) {
+interface SceneProps {
+  isMobile: boolean
+  onAllModelsLoaded: () => void
+  armAnimationRef: RefObject<ArmJointValues>
+  onSectionChange: (section: string) => void
+}
+
+function Scene({ isMobile, onAllModelsLoaded, armAnimationRef, onSectionChange }: SceneProps) {
   const { gl, scene, camera } = useThree()
   const models = useMemo(() => getAllModels(), [])
   const gltfModels = useMemo(() => {
@@ -35,12 +45,16 @@ function Scene({ isMobile, onAllModelsLoaded }: { isMobile: boolean; onAllModels
   const scrollRef = useRef(0)
   const windowHeightRef = useRef(typeof window !== 'undefined' ? window.innerHeight : 800)
   const currentSectionRef = useRef('')
+  const bottleWireframeColorRef = useRef<string | null>(null)
 
   useScroll(useCallback(({ scroll }: { scroll: number }) => {
     scrollRef.current = scroll
     const { fromSection } = getScrollState(scroll, windowHeightRef.current)
-    currentSectionRef.current = fromSection.name
-  }, []))
+    if (currentSectionRef.current !== fromSection.name) {
+      currentSectionRef.current = fromSection.name
+      onSectionChange(fromSection.name)
+    }
+  }, [onSectionChange]))
 
   const allModelsReady = loadedCount === models.length + gltfModels.length
 
@@ -96,7 +110,9 @@ function Scene({ isMobile, onAllModelsLoaded }: { isMobile: boolean; onAllModels
               wireframe={section.model!.wireframe}
               floating={section.model!.floating}
               wheelSpeed={section.model!.wheelSpeed}
+              currentSectionRef={currentSectionRef}
               propellerSpeed={section.model!.propellerSpeed}
+              armAnimationRef={section.model!.armAnimation ? armAnimationRef : undefined}
               onLoaded={handleModelLoaded}
             />
             {section.model!.terrain && (
@@ -105,7 +121,7 @@ function Scene({ isMobile, onAllModelsLoaded }: { isMobile: boolean; onAllModels
                 radius={section.model!.terrain.radius}
                 gridSize={section.model!.terrain.gridSize}
                 scrollSpeed={section.model!.terrain.scrollSpeed}
-                roughness={section.model!.terrain.roughness}
+                currentSectionRef={currentSectionRef}
               />
             )}
           </group>
@@ -113,6 +129,18 @@ function Scene({ isMobile, onAllModelsLoaded }: { isMobile: boolean; onAllModels
 
         <Stage />
         <BranchPlaceholder />
+
+        {models.map(({ section }) =>
+          section.name === 'perception' && section.gltfModel ? (
+            <ScanEffect
+              key="scan-effect"
+              currentSectionRef={currentSectionRef}
+              position={section.gltfModel.position}
+              targetSize={[40, 25, 40]}
+              wireframeColorRef={bottleWireframeColorRef}
+            />
+          ) : null
+        )}
 
         {satellites.map((section) => {
           const idx = ALL_SECTIONS.findIndex((s) => s.name === section.name)
@@ -128,18 +156,24 @@ function Scene({ isMobile, onAllModelsLoaded }: { isMobile: boolean; onAllModels
           )
         })}
 
-        {gltfModels.map((section) => (
-          <GLTFModel
-            key={`gltf-${section.name}`}
-            modelPath={section.gltfModel!.modelPath}
-            position={section.gltfModel!.position}
-            rotation={section.gltfModel!.rotation}
-            scale={section.gltfModel!.scale}
-            wireframe={section.gltfModel!.wireframe}
-            floating={section.gltfModel!.floating}
-            onLoaded={handleModelLoaded}
-          />
-        ))}
+        {gltfModels.map((section) => {
+          const isNalgene = section.gltfModel!.modelPath.includes('nalgene')
+          return (
+            <GLTFModel
+              key={`gltf-${section.name}`}
+              modelPath={section.gltfModel!.modelPath}
+              position={section.gltfModel!.position}
+              rotation={section.gltfModel!.rotation}
+              scale={section.gltfModel!.scale}
+              wireframe={section.gltfModel!.wireframe}
+              floating={section.gltfModel!.floating}
+              highlightColorRef={isNalgene ? bottleWireframeColorRef : undefined}
+              currentSectionRef={isNalgene ? currentSectionRef : undefined}
+              visibleInSection={isNalgene ? 'perception' : undefined}
+              onLoaded={handleModelLoaded}
+            />
+          )
+        })}
       </Suspense>
 
       <EffectComposer enableNormalPass={false} multisampling={4}>
@@ -151,11 +185,17 @@ function Scene({ isMobile, onAllModelsLoaded }: { isMobile: boolean; onAllModels
 
 export function AboutExperience() {
   const [modelsLoaded, setModelsLoaded] = useState(false)
+  const [currentSection, setCurrentSection] = useState('')
   const isMobile = useIsMobile()
   const { progress, item } = useProgress()
+  const { jointValuesRef, handleJointValuesChange } = useTeleopAnimation()
 
   const handleAllModelsLoaded = useCallback(() => {
     setModelsLoaded(true)
+  }, [])
+
+  const handleSectionChange = useCallback((section: string) => {
+    setCurrentSection(section)
   }, [])
 
   let loadingMessage = item
@@ -168,10 +208,19 @@ export function AboutExperience() {
     }
   }
 
+  const teleopVisible = modelsLoaded && (currentSection === 'teleop' || currentSection === 'esw-controls')
+  const eswVisible = modelsLoaded && currentSection === 'esw-controls'
+
   return (
     <>
       <LoadingOverlay progress={progress} visible={!modelsLoaded} message={loadingMessage} />
       <ProgressIndicator visible={modelsLoaded} isMobile={isMobile} />
+      <TeleopDisplay
+        visible={teleopVisible}
+        position={eswVisible ? 'left' : 'center'}
+        onJointValuesChange={handleJointValuesChange}
+      />
+      <ESWDisplay visible={eswVisible} jointValuesRef={jointValuesRef} />
       <div
         style={{
           position: 'fixed',
@@ -195,7 +244,12 @@ export function AboutExperience() {
           dpr={Math.min(window.devicePixelRatio, isMobile ? 2 : 1.5)}
         >
           <Suspense fallback={null}>
-            <Scene isMobile={isMobile} onAllModelsLoaded={handleAllModelsLoaded} />
+            <Scene
+              isMobile={isMobile}
+              onAllModelsLoaded={handleAllModelsLoaded}
+              armAnimationRef={jointValuesRef}
+              onSectionChange={handleSectionChange}
+            />
           </Suspense>
         </Canvas>
       </div>
