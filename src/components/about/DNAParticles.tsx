@@ -111,15 +111,11 @@ export function DNAParticles({ position, count = 80, colorRef }: DNAParticlesPro
         <bufferGeometry>
           <bufferAttribute
             attach="attributes-position"
-            count={count}
-            array={particleData.positions}
-            itemSize={3}
+            args={[particleData.positions, 3]}
           />
           <bufferAttribute
             attach="attributes-size"
-            count={count}
-            array={particleData.sizes}
-            itemSize={1}
+            args={[particleData.sizes, 1]}
           />
         </bufferGeometry>
         <pointsMaterial
@@ -137,9 +133,7 @@ export function DNAParticles({ position, count = 80, colorRef }: DNAParticlesPro
         <bufferGeometry>
           <bufferAttribute
             attach="attributes-position"
-            count={smokeData.count}
-            array={smokeData.positions}
-            itemSize={3}
+            args={[smokeData.positions, 3]}
           />
         </bufferGeometry>
         <pointsMaterial
