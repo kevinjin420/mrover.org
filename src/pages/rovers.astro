@@ -8,7 +8,7 @@ const featuredRovers = reversedRovers.slice(0, 3);
 const gridRovers = reversedRovers.slice(3);
 ---
 
-<BaseLayout title="Rovers - University of Michigan Mars Rover Team">
+<BaseLayout title="Rovers - University of Michigan Mars Rover Team" description="Explore MRover's history of Mars rovers from 2000 to 2025, including competition results and engineering innovations at the University Rover Challenge.">
   <RoversScene client:only="react" />
 
   <div class="relative z-10 min-h-screen w-full overflow-x-hidden font-sans">
@@ -174,7 +174,7 @@ const gridRovers = reversedRovers.slice(3);
           if (slidesArray.length > 0) {
             slidesArray.forEach(slide => {
               contentSlideshow.insertAdjacentHTML('beforeend',
-                `<img class="slide w-full animate-fade" src="/${slide}">`
+                `<img class="slide w-full animate-fade" src="/${slide}" alt="${name} rover ${year}">`
               );
             });
 
