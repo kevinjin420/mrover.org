@@ -4,10 +4,8 @@ import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
 import compress from 'astro-compress';
 
-const isDev = process.env.DEV === 'true';
-
 export default defineConfig({
-  site: isDev ? 'https://mrover.kevinjin.dev' : 'https://mrover.org',
+  site: 'https://mrover.org',
   base: '/',
   outDir: './dist',
   publicDir: './public',
@@ -22,7 +20,7 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
     build: {
-      sourcemap: true
+      sourcemap: false
     }
   }
 });

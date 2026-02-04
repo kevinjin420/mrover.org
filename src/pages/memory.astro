@@ -2,8 +2,8 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 ---
 
-<BaseLayout title="In Remembrance - University of Michigan Mars Rover Team" description="In memory of Jacqueline Tardif, former MRover president and aerospace engineer, who helped build the team's foundations." showFooter={false}>
-  <div class="relative min-h-screen bg-gradient-to-b from-[#000814] via-[#001d3d] to-[#000814] pt-24 pb-20 overflow-hidden">
+<BaseLayout title="In Remembrance - University of Michigan Mars Rover Team" description="In memory of Jacqueline Tardif, former MRover president and aerospace engineer, who helped build the team's foundations." showFooter={false} image="https://mrover.org/images/Jackie.jpeg">
+  <main id="main-content" class="relative min-h-screen bg-gradient-to-b from-[#000814] via-[#001d3d] to-[#000814] pt-24 pb-20 overflow-hidden">
     <div class="absolute inset-0 overflow-hidden pointer-events-none">
       <div class="star" style="top: 10%; left: 15%; animation-delay: 0s;"></div>
       <div class="star" style="top: 20%; left: 80%; animation-delay: 0.5s;"></div>
@@ -33,7 +33,7 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
       <div class="flex justify-center mb-16 fade-in fade-in-delay-1">
         <div class="photo-frame">
           <img
-            src="/Jackie.jpeg"
+            src="/images/Jackie.jpeg"
             alt="Jackie Tardif"
             class="rounded-lg shadow-2xl max-w-sm w-full"
           />
@@ -96,7 +96,7 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
         </a>
       </footer>
     </div>
-  </div>
+  </main>
 </BaseLayout>
 
 <style>

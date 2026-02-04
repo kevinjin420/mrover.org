@@ -40,7 +40,7 @@ const visiblePages = navPages.filter((page) => !page.hideInHeader).sort((a, b) =
 
       <div class="md:hidden">
         <div class="relative">
-          <button id="mobile-menu-button" class="p-2 text-gray-200 hover:text-mrover-accent cursor-pointer">
+          <button id="mobile-menu-button" class="p-2 text-gray-200 hover:text-mrover-accent cursor-pointer" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-menu">
             <svg viewBox="0 0 24 24" class="w-6 h-6" fill="currentColor">
               <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path>
             </svg>
@@ -79,6 +79,7 @@ const visiblePages = navPages.filter((page) => !page.hideInHeader).sort((a, b) =
 
         if (isHidden) {
           menu.classList.remove('hidden');
+          button.setAttribute('aria-expanded', 'true');
           setTimeout(() => {
             menu.classList.remove('opacity-0', 'scale-95');
             menu.classList.add('opacity-100', 'scale-100');
@@ -86,6 +87,7 @@ const visiblePages = navPages.filter((page) => !page.hideInHeader).sort((a, b) =
         } else {
           menu.classList.remove('opacity-100', 'scale-100');
           menu.classList.add('opacity-0', 'scale-95');
+          button.setAttribute('aria-expanded', 'false');
           setTimeout(() => {
             menu.classList.add('hidden');
           }, 200);
@@ -96,6 +98,7 @@ const visiblePages = navPages.filter((page) => !page.hideInHeader).sort((a, b) =
         if (!menu.contains(e.target as Node) && !button.contains(e.target as Node)) {
           menu.classList.remove('opacity-100', 'scale-100');
           menu.classList.add('opacity-0', 'scale-95');
+          button.setAttribute('aria-expanded', 'false');
           setTimeout(() => {
             menu.classList.add('hidden');
           }, 200);

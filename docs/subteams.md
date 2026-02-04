@@ -39,4 +39,4 @@ Find the entry by its `name` field and update `subteam.name` or `subteam.desc`.
 
 ## 3D Models and Effects
 
-Sections can optionally include URDF models, GLTF models, satellites, and visual effects. See [3d-models.md](3d-models.md) for details on configuring these.
+Sections can optionally include URDF models, GLTF models, and visual effects. See [3d-models.md](3d-models.md) for details on configuring these.

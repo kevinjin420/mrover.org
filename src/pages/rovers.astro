@@ -8,10 +8,10 @@ const featuredRovers = reversedRovers.slice(0, 3);
 const gridRovers = reversedRovers.slice(3);
 ---
 
-<BaseLayout title="Rovers - University of Michigan Mars Rover Team" description="Explore MRover's history of Mars rovers from 2000 to 2025, including competition results and engineering innovations at the University Rover Challenge.">
+<BaseLayout title="Rovers - University of Michigan Mars Rover Team" description="Explore MRover's history of Mars rovers from 2000 to 2025, including competition results and engineering innovations at the University Rover Challenge." image="https://mrover.org/roverImages/2025/KIWI.jpg">
   <RoversScene client:only="react" />
 
-  <div class="relative z-10 min-h-screen w-full overflow-x-hidden font-sans">
+  <main id="main-content" class="relative z-10 min-h-screen w-full overflow-x-hidden font-sans">
     <section class="max-w-[1400px] mx-auto px-8 pt-24 pb-16 flex flex-col gap-12">
       <div class="text-center pb-8">
         <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold uppercase text-white mb-4" style="font-family: 'Panchang', sans-serif; text-shadow: 0 0 30px rgba(255, 140, 0, 0.3);">
@@ -73,7 +73,7 @@ const gridRovers = reversedRovers.slice(3);
         ))}
       </div>
     </section>
-  </div>
+  </main>
 
   <div id="rover-modal" class="modal-overlay hidden fixed inset-0 z-100 flex items-center justify-center p-8 overflow-hidden">
     <div class="modal-backdrop absolute inset-0 bg-black/85 opacity-0 transition-opacity duration-300"></div>
@@ -178,27 +178,50 @@ const gridRovers = reversedRovers.slice(3);
           const slidesArray = JSON.parse(this.dataset.slides || '[]');
 
           const contentTitle = document.getElementById('content-title');
-          contentTitle.innerHTML = `<h2 class="text-3xl md:text-4xl lg:text-5xl font-semibold text-white mb-8 leading-tight" style="font-family: 'Panchang', sans-serif;">${year} <span class="text-mrover-accent mx-2">//</span> ${name}</h2>`;
+          contentTitle.textContent = '';
+          const h2 = document.createElement('h2');
+          h2.className = 'text-3xl md:text-4xl lg:text-5xl font-semibold text-white mb-8 leading-tight';
+          h2.style.fontFamily = "'Panchang', sans-serif";
+          h2.append(
+            year + ' ',
+            Object.assign(document.createElement('span'), { className: 'text-mrover-accent mx-2', textContent: '//' }),
+            ' ' + name
+          );
+          contentTitle.appendChild(h2);
 
           const contentText = document.getElementById('content-text');
-          contentText.innerHTML = '';
+          contentText.textContent = '';
           descArray.forEach(desc => {
-            contentText.insertAdjacentHTML('beforeend', `<p class="text-lg leading-relaxed text-white/85 mb-6 font-light">${desc}</p>`);
+            const p = document.createElement('p');
+            p.className = 'text-lg leading-relaxed text-white/85 mb-6 font-light';
+            p.textContent = desc;
+            contentText.appendChild(p);
           });
 
           const contentSlideshow = document.getElementById('content-slideshow');
-          contentSlideshow.innerHTML = '';
+          contentSlideshow.textContent = '';
 
           if (slidesArray.length > 0) {
             slidesArray.forEach(slide => {
-              contentSlideshow.insertAdjacentHTML('beforeend',
-                `<img class="slide w-full animate-fade" src="/${slide}" alt="${name} rover ${year}">`
-              );
+              const img = document.createElement('img');
+              img.className = 'slide w-full animate-fade';
+              img.src = '/' + slide;
+              img.alt = name + ' rover ' + year;
+              contentSlideshow.appendChild(img);
             });
 
             if (slidesArray.length > 1) {
-              contentSlideshow.insertAdjacentHTML('beforeend', '<a class="prev absolute top-1/2 left-0 -mt-5 p-4 text-white font-bold text-2xl bg-black/50 cursor-pointer select-none z-10 rounded-r transition-colors hover:bg-mrover-accent" onclick="plusSlides(-1)">&#10094;</a>');
-              contentSlideshow.insertAdjacentHTML('beforeend', '<a class="next absolute top-1/2 right-0 -mt-5 p-4 text-white font-bold text-2xl bg-black/50 cursor-pointer select-none z-10 rounded-l transition-colors hover:bg-mrover-accent" onclick="plusSlides(1)">&#10095;</a>');
+              const prev = document.createElement('a');
+              prev.className = 'prev absolute top-1/2 left-0 -mt-5 p-4 text-white font-bold text-2xl bg-black/50 cursor-pointer select-none z-10 rounded-r transition-colors hover:bg-mrover-accent';
+              prev.textContent = '\u276E';
+              prev.addEventListener('click', () => plusSlides(-1));
+              contentSlideshow.appendChild(prev);
+
+              const next = document.createElement('a');
+              next.className = 'next absolute top-1/2 right-0 -mt-5 p-4 text-white font-bold text-2xl bg-black/50 cursor-pointer select-none z-10 rounded-l transition-colors hover:bg-mrover-accent';
+              next.textContent = '\u276F';
+              next.addEventListener('click', () => plusSlides(1));
+              contentSlideshow.appendChild(next);
             }
 
             slideIndex = 0;

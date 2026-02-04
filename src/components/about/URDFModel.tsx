@@ -139,9 +139,7 @@ export function URDFModel({
           onComplete(gltf.scene)
         },
         undefined,
-        (err) => {
-          console.error('Failed to load mesh:', path, err)
-        }
+        () => {}
       )
     }
 

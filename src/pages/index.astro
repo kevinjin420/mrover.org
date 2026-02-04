@@ -5,18 +5,20 @@ import { StarsBackground } from "@/components/StarsBackground";
 
 <BaseLayout
   title="MRover - University of Michigan Mars Rover Team"
-  description="The Michigan Mars Rover Team (MRover) is a student-run, multidisciplinary team building rovers for Mars exploration and competing in the University Rover Challenge."
+  description="MRover is a student-run engineering team at the University of Michigan that designs, builds, and operates Mars rovers for the University Rover Challenge and the Canadian International Rover Challenge."
   image="https://mrover.org/images/SAR_GOBLUESHOT.webp"
 >
   <div class="fixed inset-0 bg-black -z-20"></div>
   <StarsBackground client:only="react" />
 
+  <main id="main-content">
   <div
     class="relative flex items-center justify-center font-sans"
     style="min-height: 100dvh;"
     data-hero
   >
     <div class="relative z-10 text-center px-6 max-w-5xl py-20">
+      <h1 class="sr-only">MRover - University of Michigan Mars Rover Team</h1>
       <div
         class="relative mb-0 flex items-center justify-center w-full"
         style="height: clamp(180px, 22vh, 300px);"
@@ -126,7 +128,7 @@ import { StarsBackground } from "@/components/StarsBackground";
             <h2 class="text-4xl md:text-5xl font-bold text-white leading-tight tracking-wide">WHAT WE DO</h2>
             <div class="h-1 w-20 bg-mrover-accent rounded-full"></div>
             <p class="text-white/70 text-lg leading-relaxed font-sans">
-              We're a competition-oriented team aiming to win the <span class="text-mrover-accent font-semibold">University Rover Challenge (URC)</span> at Mars Desert Research Station, Utah. With 36 teams from 15 countries competing, we secured <span class="text-mrover-accent font-semibold">11th place</span> with KIWI!
+              We're a competition-oriented team aiming to win the <span class="text-mrover-accent font-semibold">University Rover Challenge (URC)</span> at Mars Desert Research Station, Utah. We compete against teams from around the world at URC, and secured <span class="text-mrover-accent font-semibold">11th place</span> with KIWI!
             </p>
             <div class="pt-4">
               <a href="/rovers" class="inline-block group">
@@ -227,6 +229,7 @@ import { StarsBackground } from "@/components/StarsBackground";
       </div>
     </section>
   </div>
+  </main>
 </BaseLayout>
 
 <style>

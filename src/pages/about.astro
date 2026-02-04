@@ -14,7 +14,7 @@ import { BRANCHES } from "@/components/about/SceneConfig";
   <div class="about-content-wrapper relative font-sans" style="clip-path: inset(0);">
     <SceneManager client:only="react" />
 
-    <main class="relative z-1 text-white">
+    <main id="main-content" class="relative z-1 text-white">
       {BRANCHES.map((branch) => (
         <div
           class="branch-wrapper relative"

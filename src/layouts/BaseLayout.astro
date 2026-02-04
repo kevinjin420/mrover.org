@@ -16,7 +16,7 @@ interface Props {
 
 const {
   title = 'University of Michigan Mars Rover Team',
-  description = 'The Michigan Mars Rover Team (MRover) competes in the annual University Rover Challenge. In 2018, we placed 9th in the world and 3rd in the US. Our mission is to inspire students to pursue space exploration and engineering.',
+  description = 'MRover is a student-run engineering team at the University of Michigan that designs, builds, and operates Mars rovers for the University Rover Challenge and the Canadian International Rover Challenge.',
   image = 'https://mrover.org/logos/logo_short.svg',
   canonical,
   showFooter = true,
@@ -75,10 +75,6 @@ const breadcrumbList = {
         { rel: 'preload', href: '/logos/logo_light_trimmed.svg', as: 'image', type: 'image/svg+xml' },
         { rel: 'preload', href: '/fonts/panchang-700.woff2', as: 'font', type: 'font/woff2', crossOrigin: 'anonymous' },
         { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-        { rel: 'apple-touch-icon', sizes: '180x180', href: '/icons/apple-touch-icon.png' },
-        { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/icons/favicon-32x32.png' },
-        { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/icons/favicon-16x16.png' },
-        { rel: 'manifest', href: '/manifest.json' },
       ],
       meta: [
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -177,6 +173,7 @@ const breadcrumbList = {
 </head>
 
 <body class={`font-sans text-base leading-normal antialiased ${darkPage ? 'dark-page' : 'text-michigan-blue'}`}>
+  <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[999] focus:px-4 focus:py-2 focus:bg-mrover-accent focus:text-black focus:rounded">Skip to main content</a>
   <Header />
 
   <slot />

@@ -25,7 +25,6 @@ Use `--keep-materials` to preserve textures and normals (for non-wireframe model
 | `scripts/strip-model.mjs` | `node scripts/strip-model.mjs in.glb out.glb` -- strips textures/materials for wireframe |
 | `scripts/draco-compress.sh` | `./scripts/draco-compress.sh file.glb` -- Draco compression only |
 | `scripts/stl_to_glb.py` | `python scripts/stl_to_glb.py input.stl output.glb` -- STL to GLB conversion |
-| `scripts/create_propeller.py` | `python scripts/create_propeller.py` -- generates the drone propeller model |
 
 ## Scene Configuration
 
