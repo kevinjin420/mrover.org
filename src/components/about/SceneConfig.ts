@@ -142,6 +142,12 @@ const WIREFRAME_PRESETS = {
     lineOpacity: BLUEPRINT_LINE_OPACITY,
     meshOpacity: BLUEPRINT_MESH_OPACITY,
   },
+  battery: {
+    threshold: 12,
+    color: '#f59e0b',
+    lineOpacity: BLUEPRINT_LINE_OPACITY,
+    meshOpacity: BLUEPRINT_MESH_OPACITY,
+  },
 } as const satisfies Record<string, WireframeConfig>
 
 const BRANCH_DEFINITIONS: Branch[] = [
@@ -279,6 +285,19 @@ const BRANCH_DEFINITIONS: Branch[] = [
         },
         camera: { x: -400, y: 70, z: 220 },
         lookAt: { x: -400, y: 20, z: 0 },
+        model: {
+          urdfPath: '/urdf/rover/rover.urdf',
+          position: [-400, -35, 0],
+          rotation: [0, -Math.PI / 4, 0],
+          wireframe: WIREFRAME_PRESETS.mechanical,
+        },
+        gltfModel: {
+          modelPath: '/models/battery.glb',
+          position: [-400, 35, 80],
+          rotation: [0, -Math.PI / 4, 0],
+          scale: 4,
+          wireframe: WIREFRAME_PRESETS.battery,
+        },
       },
       {
         name: 'ehw',

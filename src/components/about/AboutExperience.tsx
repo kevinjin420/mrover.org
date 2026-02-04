@@ -18,6 +18,7 @@ import { ESWDisplay } from './ESWDisplay'
 import { ScanEffect } from './ScanEffect'
 import { DNAParticles } from './DNAParticles'
 import { CommSignal } from './CommSignal'
+import { PowerPulse } from './PowerPulse'
 import { BRANCH_SPACING } from './SceneConfig'
 
 interface SceneProps {
@@ -175,6 +176,7 @@ function Scene({ isMobile, onAllModelsLoaded, armAnimationRef, onSectionChange }
           const isSciencePayload = section.gltfModel!.modelPath.includes('science_payload')
           const isDNA = section.gltfModel!.modelPath.includes('dna')
           const isTower = section.gltfModel!.modelPath.includes('radio_tower')
+          const isBattery = section.gltfModel!.modelPath.includes('battery')
           return (
             <group key={`gltf-${section.name}`}>
               <GLTFModel
@@ -205,6 +207,9 @@ function Scene({ isMobile, onAllModelsLoaded, armAnimationRef, onSectionChange }
                   />
                   <DNAParticles position={[-section.gltfModel!.position[0], section.gltfModel!.position[1], section.gltfModel!.position[2]]} colorRef={dnaWireframeColorRef} />
                 </>
+              )}
+              {isBattery && (
+                <PowerPulse origin={section.gltfModel!.position} />
               )}
               {isTower && (
                 <CommSignal
