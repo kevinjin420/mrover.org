@@ -124,6 +124,12 @@ const WIREFRAME_PRESETS = {
     lineOpacity: BLUEPRINT_LINE_OPACITY,
     meshOpacity: BLUEPRINT_MESH_OPACITY,
   },
+  pcb: {
+    threshold: 5,
+    color: BLUEPRINT_COLOR,
+    lineOpacity: BLUEPRINT_LINE_OPACITY,
+    meshOpacity: BLUEPRINT_MESH_OPACITY,
+  },
 } as const satisfies Record<string, WireframeConfig>
 
 const BRANCH_DEFINITIONS: Branch[] = [
@@ -252,8 +258,8 @@ const BRANCH_DEFINITIONS: Branch[] = [
           name: 'Power',
           desc: 'Provides rover power management and distributes electricity to key systems, currently improving custom battery design.',
         },
-        camera: { x: -200, y: 70, z: 220 },
-        lookAt: { x: 0, y: 20, z: 0 },
+        camera: { x: -400, y: 70, z: 220 },
+        lookAt: { x: -400, y: 20, z: 0 },
       },
       {
         name: 'ehw',
@@ -261,8 +267,16 @@ const BRANCH_DEFINITIONS: Branch[] = [
           name: 'Embedded Hardware',
           desc: 'Designs custom circuit boards for actuator control, sensor signal reception, and data connections between electronics and external components.',
         },
-        camera: { x: 0, y: 70, z: 220 },
-        lookAt: { x: 0, y: 20, z: 0 },
+        camera: { x: 400, y: 70, z: 220 },
+        lookAt: { x: 400, y: 20, z: 0 },
+        gltfModel: {
+          modelPath: '/models/pcb.glb',
+          position: [350, 40, -20],
+          rotation: [-Math.PI / 3, 0, - Math.PI / 2],
+          scale: 800,
+          wireframe: WIREFRAME_PRESETS.pcb,
+          floating: false,
+        },
       },
       {
         name: 'comms',
@@ -270,8 +284,8 @@ const BRANCH_DEFINITIONS: Branch[] = [
           name: 'Communications',
           desc: 'Ensures wireless RF communication between base station and rover through equipment testing and selection.',
         },
-        camera: { x: 200, y: 70, z: 220 },
-        lookAt: { x: 0, y: 20, z: 0 },
+        camera: { x: -800, y: -740, z: 800 },
+        lookAt: { x: 200, y: -800, z: 0 },
       },
     ],
   },
