@@ -26,6 +26,13 @@ export interface GLTFModelConfig {
   scale: number
   wireframe?: WireframeConfig
   floating?: boolean
+  visibleInSection?: string
+  showAxes?: boolean
+  scanEffect?: { targetSize: [number, number, number] }
+  mirror?: { axis: 'x' }
+  particles?: { type: 'dna'; count?: number }
+  powerPulse?: { count?: number; radius?: number; color?: string }
+  commSignal?: { heightOffset?: number; target: { section: string; yOffset?: number } }
 }
 
 export interface ModelConfig {
@@ -53,6 +60,7 @@ export interface SectionTarget {
   model?: ModelConfig
   satellite?: SatelliteConfig
   gltfModel?: GLTFModelConfig
+  overlay?: 'teleop' | 'esw'
 }
 
 export interface Branch {
@@ -252,6 +260,7 @@ const BRANCH_DEFINITIONS: Branch[] = [
           scale: 0.4,
           wireframe: WIREFRAME_PRESETS.science,
           floating: false,
+          showAxes: true,
         },
       },
       {
@@ -268,6 +277,8 @@ const BRANCH_DEFINITIONS: Branch[] = [
           rotation: [Math.PI / 2, 0, 0],
           scale: 0.15,
           wireframe: WIREFRAME_PRESETS.dna,
+          mirror: { axis: 'x' },
+          particles: { type: 'dna' },
         },
       },
     ],
@@ -297,6 +308,7 @@ const BRANCH_DEFINITIONS: Branch[] = [
           rotation: [0, -Math.PI / 4, 0],
           scale: 4,
           wireframe: WIREFRAME_PRESETS.battery,
+          powerPulse: {},
         },
       },
       {
@@ -331,6 +343,7 @@ const BRANCH_DEFINITIONS: Branch[] = [
           scale: 1,
           wireframe: WIREFRAME_PRESETS.science,
           floating: false,
+          commSignal: { heightOffset: 100, target: { section: 'perception', yOffset: 150 } },
         },
       },
     ],
@@ -372,6 +385,8 @@ const BRANCH_DEFINITIONS: Branch[] = [
             lineOpacity: BLUEPRINT_LINE_OPACITY,
             meshOpacity: BLUEPRINT_MESH_OPACITY,
           },
+          visibleInSection: 'perception',
+          scanEffect: { targetSize: [40, 25, 40] },
         },
       },
       {
@@ -424,6 +439,7 @@ const BRANCH_DEFINITIONS: Branch[] = [
         },
         camera: { x: 180, y: 80, z: 280 },
         lookAt: { x: 0, y: 20, z: 0 },
+        overlay: 'teleop',
       },
       {
         name: 'esw-controls',
@@ -433,6 +449,7 @@ const BRANCH_DEFINITIONS: Branch[] = [
         },
         camera: { x: 300, y: 80, z: 280 },
         lookAt: { x: 0, y: 20, z: 0 },
+        overlay: 'esw',
       },
     ],
   },

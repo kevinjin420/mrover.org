@@ -12,7 +12,6 @@ const gridRovers = reversedRovers.slice(3);
   <RoversScene client:only="react" />
 
   <div class="relative z-10 min-h-screen w-full overflow-x-hidden font-sans">
-    <!-- Featured Rovers (Newest 3) -->
     <section class="max-w-[1400px] mx-auto px-8 pt-24 pb-16 flex flex-col gap-12">
       <div class="text-center pb-8">
         <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold uppercase text-white mb-4" style="font-family: 'Panchang', sans-serif; text-shadow: 0 0 30px rgba(255, 140, 0, 0.3);">
@@ -51,7 +50,6 @@ const gridRovers = reversedRovers.slice(3);
       ))}
     </section>
 
-    <!-- Rover Tiles Grid (Rest) -->
     <section class="max-w-[1400px] mx-auto px-8 pb-16">
       <div class="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-8">
         {gridRovers.map(rover => (
@@ -77,11 +75,10 @@ const gridRovers = reversedRovers.slice(3);
     </section>
   </div>
 
-  <!-- Modal Overlay -->
-  <div id="rover-modal" class="modal-overlay hidden fixed inset-0 z-100 flex items-center justify-center p-8">
+  <div id="rover-modal" class="modal-overlay hidden fixed inset-0 z-100 flex items-center justify-center p-8 overflow-hidden">
     <div class="modal-backdrop absolute inset-0 bg-black/85 opacity-0 transition-opacity duration-300"></div>
-    <div class="modal-container relative max-w-content max-h-[90vh] w-full bg-[#0a0a0a]/95 backdrop-blur-2xl border border-white/10 border-l-4 border-l-mrover-accent rounded-lg shadow-[0_30px_60px_rgba(0,0,0,0.5)] opacity-0 scale-95 translate-y-5 transition-all duration-300 overflow-hidden">
-      <div class="p-8 max-h-[90vh] overflow-y-auto">
+    <div class="modal-container relative max-w-content max-h-[90vh] w-full bg-[#0a0a0a]/95 backdrop-blur-2xl border border-white/10 border-l-4 border-l-mrover-accent rounded-lg shadow-[0_30px_60px_rgba(0,0,0,0.5)] opacity-0 scale-95 translate-y-5 transition-all duration-300 overflow-y-auto overscroll-contain" data-lenis-prevent>
+      <div class="p-8">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center">
           <div>
             <div id="content-title"></div>
@@ -95,9 +92,9 @@ const gridRovers = reversedRovers.slice(3);
     </div>
   </div>
 
-  <!-- Scripts -->
   <script is:inline>
     let slideIndex = 0;
+    let modalLenis = null;
 
     function showSlides(n) {
       const slides = document.querySelectorAll('#content-slideshow .slide');
@@ -119,10 +116,26 @@ const gridRovers = reversedRovers.slice(3);
 
     function openModal() {
       const modal = document.getElementById('rover-modal');
+      const container = modal.querySelector('.modal-container');
       const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
       modal.classList.remove('hidden');
       document.body.style.overflow = 'hidden';
       document.body.style.paddingRight = scrollbarWidth + 'px';
+      if (window.__lenis) window.__lenis.stop();
+
+      container.scrollTop = 0;
+      modalLenis = new window.__Lenis({
+        wrapper: container,
+        content: container.firstElementChild,
+        duration: 0.8,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      });
+      function modalRaf(time) {
+        modalLenis.raf(time);
+        if (modalLenis) requestAnimationFrame(modalRaf);
+      }
+      requestAnimationFrame(modalRaf);
+
       requestAnimationFrame(() => {
         modal.classList.add('visible');
       });
@@ -131,10 +144,15 @@ const gridRovers = reversedRovers.slice(3);
     function closeModal() {
       const modal = document.getElementById('rover-modal');
       modal.classList.remove('visible');
+      if (modalLenis) {
+        modalLenis.destroy();
+        modalLenis = null;
+      }
       setTimeout(() => {
         modal.classList.add('hidden');
         document.body.style.overflow = '';
         document.body.style.paddingRight = '';
+        if (window.__lenis) window.__lenis.start();
       }, 300);
     }
 

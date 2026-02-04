@@ -19,7 +19,6 @@ import { ScanEffect } from './ScanEffect'
 import { DNAParticles } from './DNAParticles'
 import { CommSignal } from './CommSignal'
 import { PowerPulse } from './PowerPulse'
-import { BRANCH_SPACING } from './SceneConfig'
 
 interface SceneProps {
   isMobile: boolean
@@ -52,6 +51,10 @@ function Scene({ isMobile, onAllModelsLoaded, armAnimationRef, onSectionChange }
   const bottleWireframeColorRef = useRef<string | null>(null)
   const dnaWireframeColorRef = useRef<string | null>(null)
   const dnaColorProgress = useRef(0)
+  const dnaSectionName = useMemo(
+    () => gltfModels.find((s) => s.gltfModel?.particles?.type === 'dna')?.name ?? '',
+    [gltfModels]
+  )
 
   useScroll(useCallback(({ scroll }: { scroll: number }) => {
     scrollRef.current = scroll
@@ -81,7 +84,7 @@ function Scene({ isMobile, onAllModelsLoaded, armAnimationRef, onSectionChange }
       }
     }
 
-    const isAstrobiology = currentSectionRef.current === 'astrobiology'
+    const isAstrobiology = currentSectionRef.current === dnaSectionName
     const target = isAstrobiology ? 1 : 0
     dnaColorProgress.current += (target - dnaColorProgress.current) * (1 - Math.exp(-4 * delta))
     const p = dnaColorProgress.current
@@ -145,18 +148,6 @@ function Scene({ isMobile, onAllModelsLoaded, armAnimationRef, onSectionChange }
         <Stage />
         <BranchPlaceholder />
 
-        {models.map(({ section }) =>
-          section.name === 'perception' && section.gltfModel ? (
-            <ScanEffect
-              key="scan-effect"
-              currentSectionRef={currentSectionRef}
-              position={section.gltfModel.position}
-              targetSize={[40, 25, 40]}
-              wireframeColorRef={bottleWireframeColorRef}
-            />
-          ) : null
-        )}
-
         {satellites.map((section) => {
           const idx = ALL_SECTIONS.findIndex((s) => s.name === section.name)
           return (
@@ -172,54 +163,72 @@ function Scene({ isMobile, onAllModelsLoaded, armAnimationRef, onSectionChange }
         })}
 
         {gltfModels.map((section) => {
-          const isNalgene = section.gltfModel!.modelPath.includes('nalgene')
-          const isSciencePayload = section.gltfModel!.modelPath.includes('science_payload')
-          const isDNA = section.gltfModel!.modelPath.includes('dna')
-          const isTower = section.gltfModel!.modelPath.includes('radio_tower')
-          const isBattery = section.gltfModel!.modelPath.includes('battery')
+          const cfg = section.gltfModel!
+          const colorRef = cfg.scanEffect ? bottleWireframeColorRef
+            : cfg.particles?.type === 'dna' ? dnaWireframeColorRef
+            : undefined
           return (
             <group key={`gltf-${section.name}`}>
               <GLTFModel
-                modelPath={section.gltfModel!.modelPath}
-                position={section.gltfModel!.position}
-                rotation={section.gltfModel!.rotation}
-                scale={section.gltfModel!.scale}
-                wireframe={section.gltfModel!.wireframe}
-                floating={section.gltfModel!.floating}
-                highlightColorRef={isNalgene ? bottleWireframeColorRef : isDNA ? dnaWireframeColorRef : undefined}
-                currentSectionRef={isNalgene ? currentSectionRef : undefined}
-                visibleInSection={isNalgene ? 'perception' : undefined}
-                showAxes={isSciencePayload}
+                modelPath={cfg.modelPath}
+                position={cfg.position}
+                rotation={cfg.rotation}
+                scale={cfg.scale}
+                wireframe={cfg.wireframe}
+                floating={cfg.floating}
+                highlightColorRef={colorRef}
+                currentSectionRef={cfg.visibleInSection ? currentSectionRef : undefined}
+                visibleInSection={cfg.visibleInSection}
+                showAxes={cfg.showAxes}
                 onLoaded={handleModelLoaded}
               />
-              {isDNA && (
-                <>
-                  <DNAParticles position={section.gltfModel!.position} colorRef={dnaWireframeColorRef} />
-                  <GLTFModel
-                    modelPath={section.gltfModel!.modelPath}
-                    position={[-section.gltfModel!.position[0], section.gltfModel!.position[1], section.gltfModel!.position[2]]}
-                    rotation={section.gltfModel!.rotation}
-                    scale={section.gltfModel!.scale}
-                    wireframe={section.gltfModel!.wireframe}
-                    floating={section.gltfModel!.floating}
-                    highlightColorRef={dnaWireframeColorRef}
-                    onLoaded={() => {}}
-                  />
-                  <DNAParticles position={[-section.gltfModel!.position[0], section.gltfModel!.position[1], section.gltfModel!.position[2]]} colorRef={dnaWireframeColorRef} />
-                </>
-              )}
-              {isBattery && (
-                <PowerPulse origin={section.gltfModel!.position} />
-              )}
-              {isTower && (
-                <CommSignal
-                  from={[section.gltfModel!.position[0], section.gltfModel!.position[1] + 100, section.gltfModel!.position[2]]}
-                  to={[0, 115 - BRANCH_SPACING * 4, 0]}
-                  sectionIndex={ALL_SECTIONS.findIndex((s) => s.name === 'comms')}
-                  scrollRef={scrollRef}
-                  windowHeightRef={windowHeightRef}
+              {cfg.scanEffect && (
+                <ScanEffect
+                  currentSectionRef={currentSectionRef}
+                  position={cfg.position}
+                  targetSize={cfg.scanEffect.targetSize}
+                  wireframeColorRef={bottleWireframeColorRef}
                 />
               )}
+              {cfg.mirror && (
+                <>
+                  <GLTFModel
+                    modelPath={cfg.modelPath}
+                    position={[-cfg.position[0], cfg.position[1], cfg.position[2]]}
+                    rotation={cfg.rotation}
+                    scale={cfg.scale}
+                    wireframe={cfg.wireframe}
+                    floating={cfg.floating}
+                    highlightColorRef={colorRef}
+                    onLoaded={() => {}}
+                  />
+                </>
+              )}
+              {cfg.particles && (
+                <>
+                  <DNAParticles position={cfg.position} colorRef={dnaWireframeColorRef} count={cfg.particles.count} />
+                  {cfg.mirror && (
+                    <DNAParticles position={[-cfg.position[0], cfg.position[1], cfg.position[2]]} colorRef={dnaWireframeColorRef} count={cfg.particles.count} />
+                  )}
+                </>
+              )}
+              {cfg.powerPulse && (
+                <PowerPulse origin={cfg.position} count={cfg.powerPulse.count} radius={cfg.powerPulse.radius} color={cfg.powerPulse.color} />
+              )}
+              {cfg.commSignal && (() => {
+                const targetSection = ALL_SECTIONS.find((s) => s.name === cfg.commSignal!.target.section)
+                const targetPos = targetSection?.model?.position
+                if (!targetPos) return null
+                return (
+                  <CommSignal
+                    from={[cfg.position[0], cfg.position[1] + (cfg.commSignal!.heightOffset ?? 0), cfg.position[2]]}
+                    to={[targetPos[0], targetPos[1] + (cfg.commSignal!.target.yOffset ?? 0), targetPos[2]]}
+                    sectionIndex={ALL_SECTIONS.findIndex((s) => s.name === section.name)}
+                    scrollRef={scrollRef}
+                    windowHeightRef={windowHeightRef}
+                  />
+                )
+              })()}
             </group>
           )
         })}
@@ -257,9 +266,14 @@ export function AboutExperience() {
     }
   }
 
-  const teleopSectionActive = modelsLoaded && (currentSection === 'teleop' || currentSection === 'esw-controls')
+  const { teleopSections, eswSections } = useMemo(() => ({
+    teleopSections: ALL_SECTIONS.filter((s) => s.overlay === 'teleop' || s.overlay === 'esw').map((s) => s.name),
+    eswSections: ALL_SECTIONS.filter((s) => s.overlay === 'esw').map((s) => s.name),
+  }), [])
+
+  const teleopSectionActive = modelsLoaded && teleopSections.includes(currentSection)
   const teleopVisible = !isMobile && teleopSectionActive
-  const eswVisible = !isMobile && modelsLoaded && currentSection === 'esw-controls'
+  const eswVisible = !isMobile && modelsLoaded && eswSections.includes(currentSection)
 
   return (
     <>

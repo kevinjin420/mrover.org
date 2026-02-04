@@ -9,7 +9,7 @@ const isDev = process.env.DEV === 'true';
 export default defineConfig({
   site: isDev ? 'https://mrover.kevinjin.dev' : 'https://mrover.org',
   base: '/',
-  outDir: './docs',
+  outDir: './dist',
   publicDir: './public',
   build: {
     assets: '_astro'

@@ -110,7 +110,6 @@ const breadcrumbList = {
 
   <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbList)} />
 
-  <!-- Dark mode script - runs before page render to prevent flash -->
   <script is:inline>
     const theme = (() => {
       if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
@@ -130,7 +129,6 @@ const breadcrumbList = {
 
     window.localStorage.setItem('theme', theme);
   </script>
-  <!-- Suppress specific Three.js warnings -->
   <script is:inline>
     const originalWarn = console.warn;
     console.warn = (...args) => {
@@ -143,13 +141,11 @@ const breadcrumbList = {
       originalWarn(...args);
     };
   </script>
-  <!-- Smooth scrolling script -->
   <script>
     import Lenis from "lenis";
     import gsap from "gsap";
     import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-    // Initialize Lenis only if we are not on the /about page
     const path = window.location.pathname.replace(/\/$/, '');
     if (path !== '/about') {
       gsap.registerPlugin(ScrollTrigger);
@@ -158,6 +154,9 @@ const breadcrumbList = {
         duration: 0.8,
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       });
+
+      (window as any).__lenis = lenis;
+      (window as any).__Lenis = Lenis;
 
       function raf(time: number) {
         lenis.raf(time);

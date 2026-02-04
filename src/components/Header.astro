@@ -6,7 +6,6 @@ interface Page {
   hideInHeader?: boolean;
 }
 
-// Define navigation pages with their properties
 const navPages: Page[] = [
   { url: "/about", title: "About", weight: 1, hideInHeader: false },
   { url: "/rovers", title: "Rovers", weight: 2, hideInHeader: false },
@@ -16,19 +15,16 @@ const navPages: Page[] = [
   { url: "/memory", title: "In Memory", weight: 6, hideInHeader: false },
 ];
 
-// Filter and sort pages for navigation
 const visiblePages = navPages.filter((page) => !page.hideInHeader).sort((a, b) => a.weight - b.weight);
 ---
 
 <header class="sticky top-0 z-50 bg-black border-b border-mrover-accent shadow-lg shadow-mrover-accent/30">
   <div class="max-w-content mx-auto px-6 lg:px-8">
     <div class="flex items-center justify-between h-16">
-      <!-- Logo -->
       <a href="/" class="flex items-center">
         <img src="/logos/logo_light_trimmed.svg" alt="MRover Logo" class="h-8 md:h-10" width="195" height="40" fetchpriority="high" />
       </a>
 
-      <!-- Desktop Navigation -->
       <nav class="hidden md:flex items-center space-x-6 font-mono">
         {
           visiblePages.map((page) => (
@@ -42,7 +38,6 @@ const visiblePages = navPages.filter((page) => !page.hideInHeader).sort((a, b) =
         }
       </nav>
 
-      <!-- Mobile Menu Button -->
       <div class="md:hidden">
         <div class="relative">
           <button id="mobile-menu-button" class="p-2 text-gray-200 hover:text-mrover-accent cursor-pointer">
@@ -51,7 +46,6 @@ const visiblePages = navPages.filter((page) => !page.hideInHeader).sort((a, b) =
             </svg>
           </button>
 
-          <!-- Mobile Dropdown -->
           <div
             id="mobile-menu"
             class="hidden absolute right-0 top-full mt-2 w-48 bg-black border border-mrover-accent rounded-lg shadow-lg shadow-mrover-accent/30 overflow-hidden opacity-0 scale-95 transition-all duration-200 origin-top-right font-mono"
@@ -84,14 +78,12 @@ const visiblePages = navPages.filter((page) => !page.hideInHeader).sort((a, b) =
         const isHidden = menu.classList.contains('hidden');
 
         if (isHidden) {
-          // Show menu with animation
           menu.classList.remove('hidden');
           setTimeout(() => {
             menu.classList.remove('opacity-0', 'scale-95');
             menu.classList.add('opacity-100', 'scale-100');
           }, 10);
         } else {
-          // Hide menu with animation
           menu.classList.remove('opacity-100', 'scale-100');
           menu.classList.add('opacity-0', 'scale-95');
           setTimeout(() => {
@@ -100,7 +92,6 @@ const visiblePages = navPages.filter((page) => !page.hideInHeader).sort((a, b) =
         }
       });
 
-      // Close menu when clicking outside
       document.addEventListener('click', (e) => {
         if (!menu.contains(e.target as Node) && !button.contains(e.target as Node)) {
           menu.classList.remove('opacity-100', 'scale-100');

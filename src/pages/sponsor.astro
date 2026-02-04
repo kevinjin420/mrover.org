@@ -54,7 +54,6 @@ const sponsorshipLevels = [
 
 <BaseLayout title="Sponsor - University of Michigan Mars Rover Team" description="Partner with MRover. Sponsorship tiers from Bronze to Platinum supporting materials, outreach, and competition travel." showFooter={false}>
   <div class="bg-[#0a0808] text-white">
-    <!-- Hero -->
     <section class="relative h-[70vh] min-h-[500px] flex items-center justify-center">
       <div class="absolute inset-0 bg-cover bg-center bg-[url('/images/canyons-and-sponsors.webp')]"></div>
       <div class="absolute inset-0 bg-gradient-to-b from-black/60 to-[#0a0808]"></div>
@@ -74,7 +73,6 @@ const sponsorshipLevels = [
       </div>
     </section>
 
-    <!-- Why Sponsor -->
     <section class="py-28 bg-[#0a0808]">
       <div class="max-w-[1200px] mx-auto px-8">
         <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold uppercase text-center tracking-wide mb-16">
@@ -114,7 +112,6 @@ const sponsorshipLevels = [
       </div>
     </section>
 
-    <!-- Sponsorship Levels -->
     <section class="py-28 bg-gradient-to-b from-[#0a0808] to-[#111]">
       <div class="max-w-[1200px] mx-auto px-8">
         <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold uppercase text-center tracking-wide mb-16">
@@ -127,9 +124,9 @@ const sponsorshipLevels = [
                 <span class={`text-xl font-bold uppercase tracking-wide ${level.nameColor}`}>{level.name}</span>
                 <span class="text-lg font-semibold text-white/70">{level.amount}</span>
               </div>
-              <ul class="p-6 space-y-4">
+              <ul class="px-4 py-6 space-y-4 m-0">
                 {level.benefits.map((benefit) => (
-                  <li class="flex items-start gap-3 text-white/80 leading-relaxed">
+                  <li class="flex items-start gap-2 text-white/80 leading-relaxed">
                     <span class="w-1.5 h-1.5 rounded-full bg-mrover-accent mt-2 shrink-0"></span>
                     <span>{benefit}</span>
                   </li>
@@ -144,7 +141,6 @@ const sponsorshipLevels = [
       </div>
     </section>
 
-    <!-- Donate -->
     <section class="py-24 bg-mrover-accent text-black">
       <div class="max-w-[1200px] mx-auto px-8">
         <div class="flex flex-col md:flex-row items-center justify-between gap-12 text-center md:text-left">
@@ -168,7 +164,6 @@ const sponsorshipLevels = [
       </div>
     </section>
 
-    <!-- Contact -->
     <section class="py-28 bg-[#0a0808] text-center">
       <div class="max-w-[1200px] mx-auto px-8">
         <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold uppercase mb-14 tracking-wide">
@@ -186,7 +181,6 @@ const sponsorshipLevels = [
       </div>
     </section>
 
-    <!-- All Sponsors -->
     <AllSponsors />
   </div>
 </BaseLayout>
