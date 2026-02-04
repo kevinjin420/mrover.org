@@ -16,6 +16,9 @@ import { LoadingOverlay, ProgressIndicator, useIsMobile } from './UI'
 import { TeleopDisplay, useTeleopAnimation, type ArmJointValues } from './TeleopDisplay'
 import { ESWDisplay } from './ESWDisplay'
 import { ScanEffect } from './ScanEffect'
+import { DNAParticles } from './DNAParticles'
+import { CommSignal } from './CommSignal'
+import { BRANCH_SPACING } from './SceneConfig'
 
 interface SceneProps {
   isMobile: boolean
@@ -46,6 +49,8 @@ function Scene({ isMobile, onAllModelsLoaded, armAnimationRef, onSectionChange }
   const windowHeightRef = useRef(typeof window !== 'undefined' ? window.innerHeight : 800)
   const currentSectionRef = useRef('')
   const bottleWireframeColorRef = useRef<string | null>(null)
+  const dnaWireframeColorRef = useRef<string | null>(null)
+  const dnaColorProgress = useRef(0)
 
   useScroll(useCallback(({ scroll }: { scroll: number }) => {
     scrollRef.current = scroll
@@ -62,7 +67,7 @@ function Scene({ isMobile, onAllModelsLoaded, armAnimationRef, onSectionChange }
     setLoadedCount((c) => c + 1)
   }, [])
 
-  useFrame(() => {
+  useFrame((_, delta) => {
     if (allModelsReady) {
       if (!compiled.current) {
         gl.compile(scene, camera)
@@ -74,6 +79,15 @@ function Scene({ isMobile, onAllModelsLoaded, armAnimationRef, onSectionChange }
         onAllModelsLoaded()
       }
     }
+
+    const isAstrobiology = currentSectionRef.current === 'astrobiology'
+    const target = isAstrobiology ? 1 : 0
+    dnaColorProgress.current += (target - dnaColorProgress.current) * (1 - Math.exp(-4 * delta))
+    const p = dnaColorProgress.current
+    const r = Math.round(10 + p * (34 - 10))
+    const g = Math.round(122 + p * (197 - 122))
+    const b = Math.round(204 + p * (94 - 204))
+    dnaWireframeColorRef.current = `rgb(${r},${g},${b})`
   })
 
   return (
@@ -159,21 +173,49 @@ function Scene({ isMobile, onAllModelsLoaded, armAnimationRef, onSectionChange }
         {gltfModels.map((section) => {
           const isNalgene = section.gltfModel!.modelPath.includes('nalgene')
           const isSciencePayload = section.gltfModel!.modelPath.includes('science_payload')
+          const isDNA = section.gltfModel!.modelPath.includes('dna')
+          const isTower = section.gltfModel!.modelPath.includes('radio_tower')
           return (
-            <GLTFModel
-              key={`gltf-${section.name}`}
-              modelPath={section.gltfModel!.modelPath}
-              position={section.gltfModel!.position}
-              rotation={section.gltfModel!.rotation}
-              scale={section.gltfModel!.scale}
-              wireframe={section.gltfModel!.wireframe}
-              floating={section.gltfModel!.floating}
-              highlightColorRef={isNalgene ? bottleWireframeColorRef : undefined}
-              currentSectionRef={isNalgene ? currentSectionRef : undefined}
-              visibleInSection={isNalgene ? 'perception' : undefined}
-              showAxes={isSciencePayload}
-              onLoaded={handleModelLoaded}
-            />
+            <group key={`gltf-${section.name}`}>
+              <GLTFModel
+                modelPath={section.gltfModel!.modelPath}
+                position={section.gltfModel!.position}
+                rotation={section.gltfModel!.rotation}
+                scale={section.gltfModel!.scale}
+                wireframe={section.gltfModel!.wireframe}
+                floating={section.gltfModel!.floating}
+                highlightColorRef={isNalgene ? bottleWireframeColorRef : isDNA ? dnaWireframeColorRef : undefined}
+                currentSectionRef={isNalgene ? currentSectionRef : undefined}
+                visibleInSection={isNalgene ? 'perception' : undefined}
+                showAxes={isSciencePayload}
+                onLoaded={handleModelLoaded}
+              />
+              {isDNA && (
+                <>
+                  <DNAParticles position={section.gltfModel!.position} colorRef={dnaWireframeColorRef} />
+                  <GLTFModel
+                    modelPath={section.gltfModel!.modelPath}
+                    position={[-section.gltfModel!.position[0], section.gltfModel!.position[1], section.gltfModel!.position[2]]}
+                    rotation={section.gltfModel!.rotation}
+                    scale={section.gltfModel!.scale}
+                    wireframe={section.gltfModel!.wireframe}
+                    floating={section.gltfModel!.floating}
+                    highlightColorRef={dnaWireframeColorRef}
+                    onLoaded={() => {}}
+                  />
+                  <DNAParticles position={[-section.gltfModel!.position[0], section.gltfModel!.position[1], section.gltfModel!.position[2]]} colorRef={dnaWireframeColorRef} />
+                </>
+              )}
+              {isTower && (
+                <CommSignal
+                  from={[section.gltfModel!.position[0], section.gltfModel!.position[1] + 100, section.gltfModel!.position[2]]}
+                  to={[0, 115 - BRANCH_SPACING * 4, 0]}
+                  sectionIndex={ALL_SECTIONS.findIndex((s) => s.name === 'comms')}
+                  scrollRef={scrollRef}
+                  windowHeightRef={windowHeightRef}
+                />
+              )}
+            </group>
           )
         })}
       </Suspense>

@@ -110,6 +110,10 @@ export function GLTFModel({
       groupRef.current.rotation.y = rotation[1] + Math.sin(t * 0.3) * 0.15
     }
 
+    if (modelPath.includes('dna') && groupRef.current) {
+      groupRef.current.rotation.z += delta * 0.5
+    }
+
     if (highlightColorRef && wireframeGroupRef.current) {
       const targetColor = highlightColorRef.current ?? baseColorRef.current
       wireframeGroupRef.current.traverse((child) => {
