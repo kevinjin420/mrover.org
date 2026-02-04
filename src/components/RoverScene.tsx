@@ -81,8 +81,6 @@ export default function RoverScene() {
     // Loading manager
     const manager = new THREE.LoadingManager();
     manager.onLoad = () => {
-      console.log("Loading complete!");
-
       // Animate the rover
       timeline = gsap.timeline({ repeat: -1, yoyo: true });
 

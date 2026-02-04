@@ -145,10 +145,8 @@ export function URDFModel({
       )
     }
 
-    console.log(`[URDFModel] Loading: ${urdfPath}`)
     loader.load(urdfPath, (result) => {
       loadedRobot = result
-      console.log(`[URDFModel] Loaded: ${urdfPath}`)
     })
 
     manager.onLoad = () => {
@@ -207,7 +205,6 @@ export function URDFModel({
               })
 
               const threshold = config.overrides?.[resolvedName] ?? config.threshold
-              console.log(`[URDFModel] Part: "${resolvedName}" threshold: ${threshold} (${urdfPath})`)
 
               if (threshold < 360) {
                 const edgesGeo = new THREE.EdgesGeometry(child.geometry, threshold)
@@ -221,7 +218,6 @@ export function URDFModel({
                 child.add(edges)
               }
             } else {
-              console.log(`[URDFModel] Part: "${resolvedName}" (${urdfPath})`)
               child.castShadow = true
               child.receiveShadow = true
               const mat = child.material as THREE.MeshStandardMaterial
@@ -256,14 +252,12 @@ export function URDFModel({
             }
 
             if (wireframe) {
-              console.log(`[URDFModel] Ready: ${urdfPath}`)
               robotRef.current = loadedRobot as RobotWithJoints
               setRobot(loadedRobot)
               onLoaded?.()
             } else {
               Promise.all(texturePromises).then(() => {
                 if (isMounted) {
-                  console.log(`[URDFModel] Ready: ${urdfPath}`)
                   robotRef.current = loadedRobot as RobotWithJoints
                   setRobot(loadedRobot)
                   onLoaded?.()
